@@ -12,74 +12,36 @@ import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Service;
 
-
-package com.example.uploadingfiles;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-
 @Service
 public class GRPCClientService {
-    public String ping() {
-        	ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090)
-                .usePlaintext()
-                .build();        
-		PingPongServiceGrpc.PingPongServiceBlockingStub stub
-                = PingPongServiceGrpc.newBlockingStub(channel);        
+	public String ping() {
+		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090)
+				.usePlaintext()
+				.build();
+		PingPongServiceGrpc.PingPongServiceBlockingStub stub = PingPongServiceGrpc.newBlockingStub(channel);
 		PongResponse helloResponse = stub.ping(PingRequest.newBuilder()
-                .setPing("")
-                .build());        
-		channel.shutdown();        
+				.setPing("")
+				.build());
+		channel.shutdown();
 		return helloResponse.getPong();
-    }
-	// upload
-	@PostMapping("/")
-	public String handleFileUpload(@RequestParam("file") MultipartFile file,
-			RedirectAttributes redirectAttributes) {
-
-		storageService.store(file);
-		redirectAttributes.addFlashAttribute("message",
-				"You successfully uploaded " + file.getOriginalFilename() + "!");
-
-		return "redirect:/";
 	}
-    public String add(){
-		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost",9090)
-		.usePlaintext()
-		.build();
-		MatrixServiceGrpc.MatrixServiceBlockingStub stub
-		 = MatrixServiceGrpc.newBlockingStub(channel);
-		MatrixReply A=stub.addBlock(MatrixRequest.newBuilder()
-			.setA00(1)
-			.setA01(2)
-			.setA10(5)
-			.setA11(6)
-			.setB00(1)
-			.setB01(2)
-			.setB10(5)
-			.setB11(6)
-			.build());
-		String resp= A.getC00()+" "+A.getC01()+"<br>"+A.getC10()+" "+A.getC11()+"\n";
-		return resp;
-    }
-	public String mult(){
-		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost",9090)
-		.usePlaintext()
-		.build();
-		MatrixServiceGrpc.MatrixServiceBlockingStub stub
-		 = MatrixServiceGrpc.newBlockingStub(channel);
-		MatrixReply A=stub.multiplyBlock(MatrixRequest.newBuilder()
-			.setA00(1)
-			.setA01(2)
-			.setA10(5)
-			.setA11(6)
-			.setB00(1)
-			.setB01(2)
-			.setB10(5)
-			.setB11(6)
-			.build());
-		String resp= A.getC00()+" "+A.getC01()+"<br>"+A.getC10()+" "+A.getC11()+"\n";
+
+	public String add() {
+		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090)
+				.usePlaintext()
+				.build();
+		MatrixServiceGrpc.MatrixServiceBlockingStub stub = MatrixServiceGrpc.newBlockingStub(channel);
+		MatrixReply A = stub.addBlock(MatrixRequest.newBuilder()
+				.setA00(1)
+				.setA01(2)
+				.setA10(5)
+				.setA11(6)
+				.setB00(1)
+				.setB01(2)
+				.setB10(5)
+				.setB11(6)
+				.build());
+		String resp = A.getC00() + " " + A.getC01() + "<br>" + A.getC10() + " " + A.getC11() + "\n";
 		return resp;
 	}
 }
