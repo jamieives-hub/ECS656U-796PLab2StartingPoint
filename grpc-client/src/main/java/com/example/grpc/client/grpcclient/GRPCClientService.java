@@ -34,16 +34,16 @@ public class GRPCClientService {
 		return helloResponse.getPong();
     }
 	// upload
-	@PostMapping("/")
-	public String handleFileUpload(@RequestParam("file") MultipartFile file,
-			RedirectAttributes redirectAttributes) {
+	// @PostMapping("/")
+	// public String handleFileUpload(@RequestParam("file") MultipartFile file,
+	// 		RedirectAttributes redirectAttributes) {
 
-		storageService.store(file);
-		redirectAttributes.addFlashAttribute("message",
-				"You successfully uploaded " + file.getOriginalFilename() + "!");
+	// 	storageService.store(file);
+	// 	redirectAttributes.addFlashAttribute("message",
+	// 			"You successfully uploaded " + file.getOriginalFilename() + "!");
 
-		return "redirect:/";
-	}
+	// 	return "redirect:/";
+	// }
     public String add(){
 		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost",9090)
 		.usePlaintext()
