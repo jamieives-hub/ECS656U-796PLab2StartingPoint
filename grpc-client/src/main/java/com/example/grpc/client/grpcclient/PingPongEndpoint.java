@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 
+import com.example.uploadingfiles.GRPCClientService;
+
 @RestController
 public class PingPongEndpoint {    
 
@@ -31,6 +33,6 @@ public class PingPongEndpoint {
 	@GetMapping("/upload")
 	public FileUploadResponse fileUpload(@RequestParam("file") MultipartFile file) throws IllegalStateException, IOException {
 		System.out.println("Upload Test");
-		return grpcClientService.fileUpload(file);
+		return grpcClientService.handleFileUpload(file);
 	}
 }
