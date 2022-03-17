@@ -56,9 +56,9 @@ public class GRPCClientService {
 	}
 	public FileUploadResponse fileUpload(@RequestParam("file") MultipartFile fileUpload){
 
-		String fileName = fileUpload.getOriginalFilename();
-		String matrixConv = convertMatrixtoString(fileUpload);
-		int[][] matrixNew = convertToMatrix(matrixConv);
+		// String fileName = fileUpload.getOriginalFilename();
+		// String matrixConv = convertMatrixtoString(fileUpload);
+		// int[][] matrixNew = convertToMatrix(matrixConv);
 
 	}
 	
