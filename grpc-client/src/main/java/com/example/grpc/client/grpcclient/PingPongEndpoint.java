@@ -28,4 +28,9 @@ public class PingPongEndpoint {
 	public String add() {
 		return grpcClientService.add();
 	}
+	@GetMapping("/upload")
+	public FileUploadResponse fileUpload(@RequestParam("file") MultipartFile file) throws IllegalStateException, IOException {
+		System.out.println("Upload Test");
+		return grpcClientService.fileUpload(file);
+	}
 }
