@@ -15,7 +15,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-package com.example.uploadingfiles;
 
 import java.io.IOException;
 import java.util.stream.Collectors;
