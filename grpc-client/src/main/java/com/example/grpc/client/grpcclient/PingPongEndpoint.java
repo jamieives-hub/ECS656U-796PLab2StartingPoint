@@ -22,7 +22,11 @@ public class PingPongEndpoint {
 	@Autowired
     	public PingPongEndpoint(GRPCClientService grpcClientService) {
         	this.grpcClientService = grpcClientService;
-    	}    
+    	}
+	@GetMapping("/")
+	public String home() {
+		return "uploadForm";
+	}   
 	@GetMapping("/ping")
     	public String ping() {
         	return grpcClientService.ping();
@@ -31,9 +35,9 @@ public class PingPongEndpoint {
 	public String add() {
 		return grpcClientService.add();
 	}
-	@PostMapping("/upload")
+	@PostMapping("/")
 	public String fileUpload(@RequestParam("file") MultipartFile file) throws IllegalStateException, IOException {
 		System.out.println("Upload Test");
-		return grpcClientService.handleFileUpload(file, null);
+		return "redirect:/";
 	}
 }
