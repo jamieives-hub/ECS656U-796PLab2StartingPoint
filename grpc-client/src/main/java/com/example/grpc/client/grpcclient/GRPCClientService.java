@@ -73,6 +73,7 @@ public class GRPCClientService {
 		
 		redirectAttributes.addFlashAttribute("message",
 				"You successfully uploaded " + file.getOriginalFilename() + "!");
+		System.out.println("U have uploaded g")
 
 		return "redirect:/add";
 	}
