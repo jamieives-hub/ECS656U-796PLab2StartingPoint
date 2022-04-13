@@ -16,5 +16,5 @@ public class GrpcClientApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(GrpcClientApplication.class, args);
-		
+	}
 }
