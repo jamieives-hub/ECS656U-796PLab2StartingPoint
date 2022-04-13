@@ -2,32 +2,32 @@
 
 <body>
 
-    <div th:if="${message}">
-        <h2 th:text="${message}" />
-    </div>
 
     <div>
         <form method="POST" enctype="multipart/form-data" action="/">
-            <table>
-                <tr>
-                    <td>File to upload:</td>
-                    <td><input type="file" name="file" /></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" value="Upload" /></td>
-                </tr>
-            </table>
+            <input type="file" name="file" />
+            <label for="operation">Choose an operation:</label>
+
+            <select name="operation" id="operation">
+                <option value="multiply">Multiply</option>
+                <option value="Addition">Addition</option>
+            </select>
+            <label>Please select deadline</label>
+            <select name="deadline" id="deadline">
+                <option value="1.0">1.0</option>
+                <option value="1.5">1.5</option>
+                <option value="2.0">2.0</option>
+                <option value="2.5">2.5</option>
+                <option value="3.0">3.0</option>
+            </select>
+
+            <input type="submit" value="Submit" />
+
         </form>
     </div>
+    <div th:utext="${result}" />
+    <h2 th:text="${error}" />
 
-    <div>
-        <ul>
-            <li th:each="file : ${files}">
-                <a th:href="${file}" th:text="${file}" />
-            </li>
-        </ul>
-    </div>
 
 </body>
 
