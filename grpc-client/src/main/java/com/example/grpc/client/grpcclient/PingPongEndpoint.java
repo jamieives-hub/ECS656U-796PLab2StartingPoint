@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 
-import com.example.uploadingfiles.GRPCClientService;
 
 @RestController
 public class PingPongEndpoint {    
