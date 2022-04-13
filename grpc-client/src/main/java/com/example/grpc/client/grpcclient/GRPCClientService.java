@@ -67,15 +67,15 @@ public class GRPCClientService {
 		return resp;
 	}
 	
-	public String handleFileUpload(@RequestParam("file") MultipartFile file,
+	public void handleFileUpload(@RequestParam("file") MultipartFile file,
 			RedirectAttributes redirectAttributes) {
 
 		
 		redirectAttributes.addFlashAttribute("message",
 				"You successfully uploaded " + file.getOriginalFilename() + "!");
 		System.out.println("U have uploaded"+ file.getOriginalFilename());
-
-		return "redirect:/add";
+		
+		
 	}
 	
 }
