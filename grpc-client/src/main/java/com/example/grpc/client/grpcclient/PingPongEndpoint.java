@@ -30,7 +30,7 @@ public class PingPongEndpoint {
     	}
 	@GetMapping("/")
 	public String home() {
-		return "redirect:uploadForm";
+		return "redirect:/main/resources/templates/uploadForm.html";
 	}   
 	@GetMapping("/ping")
     	public String ping() {
