@@ -28,7 +28,7 @@ public class PingPongEndpoint {
     	public PingPongEndpoint(GRPCClientService grpcClientService) {
         	this.grpcClientService = grpcClientService;
     	}
-	@RequestMapping("/")
+	@GetMapping("/")
 	public String home() {
 		return "uploadForm";
 	}   
