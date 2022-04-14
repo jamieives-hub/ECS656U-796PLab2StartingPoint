@@ -67,15 +67,20 @@ public class GRPCClientService {
 		return resp;
 	}
 	
-	public String handleFileUpload(@RequestParam("file") MultipartFile file,
-			RedirectAttributes redirectAttributes) {
+	public void handleFileUpload(@RequestParam("file") MultipartFile file,@RequestParam("operation") String operation,@RequestParam("deadline") String deadline,
+			RedirectAttributes redirectAttributes) throws IOException {
 
 		
 		redirectAttributes.addFlashAttribute("message",
 				"You successfully uploaded " + file.getOriginalFilename() + "!");
-		System.out.println("U have uploaded"+ file.getOriginalFilename());
+		System.out.println("U have uploaded "+ file.getOriginalFilename());
+		String matrixContent = new String(file.getBytes());
+		print(matrixContent);
 		
-		return "uploaded";
+		
 	}
+	public void print(String content){
+		System.out.println(content);
+	};
 	
 }

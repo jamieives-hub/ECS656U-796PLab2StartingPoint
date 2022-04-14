@@ -41,8 +41,8 @@ public class PingPongEndpoint {
 		return grpcClientService.add();
 	}
 	@PostMapping("/")
-	public String fileUpload(@RequestParam("file") MultipartFile file,RedirectAttributes redirectAttributes) throws IllegalStateException, IOException {
+	public void fileUpload(@RequestParam("file") MultipartFile file,RedirectAttributes redirectAttributes) throws IllegalStateException, IOException {
 		System.out.println("Upload Test");
-		return grpcClientService.handleFileUpload(file, redirectAttributes);
+		grpcClientService.handleFileUpload(file, redirectAttributes);
 	}
 }
