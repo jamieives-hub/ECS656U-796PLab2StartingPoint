@@ -68,7 +68,7 @@ public class GRPCClientService {
 	}
 	
 	public void handleFileUpload(@RequestParam("file") MultipartFile file,
-			RedirectAttributes redirectAttributes) throws IOException {
+			RedirectAttributes redirectAttributes,@RequestParam("operation") String operation,@RequestParam("deadline") String deadline) throws IOException {
 
 		
 		redirectAttributes.addFlashAttribute("message",
@@ -76,6 +76,12 @@ public class GRPCClientService {
 		System.out.println("U have uploaded "+ file.getOriginalFilename());
 		String matrixContent = new String(file.getBytes());
 		print(matrixContent);
+		String[] matrixContentSplit = matrixContent.split(":");
+		String matrix1 = matrixContentSplit[0];//string of matrix need to convert to integer array / matrix
+		String matrix2 = matrixContentSplit[1];
+		print(matrix1);
+		print(matrix2);
+		
 		
 		
 	}
