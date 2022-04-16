@@ -85,7 +85,10 @@ public class GRPCClientService {
 		//if array matrix 1 (split by commas) is equal to array matrix 2(split by commas)
 		String [] matrix1CommaSep = matrix1.split(",");
 		String[] matrix2CommaSep = matrix2.split(",");
-		System.out.println(matrix1CommaSep);
+		for(int i = 0;i<matrix1CommaSep.length;i++)
+		{
+			print(matrix1CommaSep[i]);
+		}
 		if(matrix1CommaSep.length == matrix2CommaSep.length){
 			
 		}
