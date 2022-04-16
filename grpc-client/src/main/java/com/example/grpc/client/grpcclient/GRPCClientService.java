@@ -75,7 +75,6 @@ public class GRPCClientService {
 		System.out.println("U have uploaded "+ file.getOriginalFilename());
 		// System.out.println("U have uploaded " + file2.getOriginalFilename());
 
-		String matrixContent1 = new String(file.getBytes());
 		// String matrixContent2 = new String(file2.getBytes());
 		// String [] matrixContentSplit = matrixContent.split("@");
 		// String matrix1 = matrixContentSplit[0];
@@ -89,7 +88,24 @@ public class GRPCClientService {
 		// if(matrix1CommaSep.length == matrix2CommaSep.length){
 			
 		// }
-		String [] rows = matrixContent1.split("\n");
+		try{
+			String matrixContent = new String(file.getBytes());
+			if(matrixContent.length()!=0){
+				String [] matrixContentSplit = matrixContent.split("@");
+				String matrix1 = matrixContentSplit[0];
+				String matrix2 = matrixContentSplit[1];
+				print(matrix1);
+				print(matrix2);
+			}
+			else{
+				System.out.println("You have uploaded an empty file");
+			}
+			
+		}
+		catch (Exception e){
+			print("Error"+ e);
+		}
+		
 
 		
 	}
