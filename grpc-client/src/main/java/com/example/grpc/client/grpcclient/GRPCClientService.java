@@ -67,8 +67,7 @@ public class GRPCClientService {
 		return resp;
 	}
 	
-	public void handleFileUpload(@RequestParam("file1") MultipartFile file1,@RequestParam("file2") MultipartFile file2,
-			@RequestParam("operation") String operation,@RequestParam("deadline") String deadline,RedirectAttributes redirectAttributes) throws IOException {
+	public void handleFileUpload(@RequestParam("file1") MultipartFile file1,@RequestParam("operation") String operation,@RequestParam("deadline") String deadline,RedirectAttributes redirectAttributes) throws IOException {
 
 		
 		redirectAttributes.addFlashAttribute("message",
