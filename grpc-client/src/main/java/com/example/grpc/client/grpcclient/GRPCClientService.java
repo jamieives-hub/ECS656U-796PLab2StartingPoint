@@ -73,26 +73,11 @@ public class GRPCClientService {
 		redirectAttributes.addFlashAttribute("message",
 				"You successfully uploaded " + file.getOriginalFilename() + "!");
 		System.out.println("U have uploaded "+ file.getOriginalFilename());
-		// System.out.println("U have uploaded " + file2.getOriginalFilename());
-
-		// String matrixContent2 = new String(file2.getBytes());
-		// String [] matrixContentSplit = matrixContent.split("@");
-		// String matrix1 = matrixContentSplit[0];
-		// String matrix2 = matrixContentSplit[1];
-		// print("M1: "+ matrix1);
-		// print("M2: " + matrix2);
-		//if array length matrix 1 is equal to array length of matrix 2
-		//if array matrix 1 (split by commas) is equal to array matrix 2(split by commas)
-		// String [] matrix1CommaSep = matrix1.split(",");
-		// String[] matrix2CommaSep = matrix2.split(",");
-		// if(matrix1CommaSep.length == matrix2CommaSep.length){
-			
-		// }
 		try{
 			String matrixContent = new String(file.getBytes());
 			if(matrixContent.length()!=0){
 				String [] matrixContentSplit = matrixContent.split("@");
-				if (matrixContentSplit.length==1){
+				if (matrixContentSplit.length==2){
 					String matrix1 = matrixContentSplit[0];
 					String matrix2 = matrixContentSplit[1];
 					print(matrix1);
