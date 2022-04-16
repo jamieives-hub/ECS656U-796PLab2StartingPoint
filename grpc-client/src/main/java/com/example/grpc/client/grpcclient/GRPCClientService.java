@@ -67,7 +67,7 @@ public class GRPCClientService {
 		return resp;
 	}
 	
-	public void handleFileUpload(@RequestParam("file") MultipartFile file,
+	public void handleFileUpload(@RequestParam("file") MultipartFile file1,@RequestParam("file") MultipartFile file2,
 			@RequestParam("operation") String operation,@RequestParam("deadline") String deadline,RedirectAttributes redirectAttributes) throws IOException {
 
 		
@@ -76,23 +76,20 @@ public class GRPCClientService {
 		System.out.println("U have uploaded "+ file.getOriginalFilename());
 
 		String matrixContent = new String(file.getBytes());
-		String [] matrixContentSplit = matrixContent.split("@");
-		String matrix1 = matrixContentSplit[0];
-		String matrix2 = matrixContentSplit[1];
-		print("M1: "+ matrix1);
-		print("M2: " + matrix2);
+		// String [] matrixContentSplit = matrixContent.split("@");
+		// String matrix1 = matrixContentSplit[0];
+		// String matrix2 = matrixContentSplit[1];
+		// print("M1: "+ matrix1);
+		// print("M2: " + matrix2);
 		//if array length matrix 1 is equal to array length of matrix 2
 		//if array matrix 1 (split by commas) is equal to array matrix 2(split by commas)
-		String [] matrix1CommaSep = matrix1.split(",");
-		String[] matrix2CommaSep = matrix2.split(",");
-		for(int i = 0;i<matrix1CommaSep.length;i++)
-		{
-			print(matrix1CommaSep[i]);
-		}
-		if(matrix1CommaSep.length == matrix2CommaSep.length){
+		// String [] matrix1CommaSep = matrix1.split(",");
+		// String[] matrix2CommaSep = matrix2.split(",");
+		// if(matrix1CommaSep.length == matrix2CommaSep.length){
 			
-		}
-		
+		// }
+		String [] rows = matrixContent.split("\n");
+
 		
 	}
 	public void print(String content){
