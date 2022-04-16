@@ -79,9 +79,14 @@ public class GRPCClientService {
 		String [] matrixContentSplit = matrixContent.split("@");
 		String matrix1 = matrixContentSplit[0];
 		String matrix2 = matrixContentSplit[1];
-		print("M1: "+matrix1);
+		print("M1: "+ matrix1);
 		print("M2: " + matrix2);
-		
+		//if array length matrix 1 is equal to array length of matrix 2
+		//if array matrix 1 (split by commas) is equal to array matrix 2(split by commas)
+		String [] matrix1CommaSep = matrix1.split(",");
+		String[] matrix2CommaSep = matrix2.split(",");
+		System.out.println(matrix1CommaSep.length);
+		System.out.println(matrix2CommaSep.length);
 		
 		
 	}
