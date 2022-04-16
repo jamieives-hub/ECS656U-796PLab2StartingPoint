@@ -87,6 +87,7 @@ public class GRPCClientService {
 		String[] matrix2CommaSep = matrix2.split(",");
 		System.out.println(matrix1CommaSep.length);
 		System.out.println(matrix2CommaSep.length);
+		System.out.println(matrix1CommaSep);
 		
 		
 	}
