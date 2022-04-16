@@ -76,7 +76,7 @@ public class GRPCClientService {
 		System.out.println("U have uploaded "+ file.getOriginalFilename());
 
 		String matrixContent = new String(file.getBytes());
-		String [] matrixContentSplit = matrixContent.split("@\n");
+		String [] matrixContentSplit = matrixContent.split("@");
 		String matrix1 = matrixContentSplit[0];
 		String matrix2 = matrixContentSplit[1];
 		print("M1: "+matrix1);
