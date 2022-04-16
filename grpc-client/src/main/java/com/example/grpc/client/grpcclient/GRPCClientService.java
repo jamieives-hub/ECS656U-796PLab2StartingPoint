@@ -75,12 +75,11 @@ public class GRPCClientService {
 				"You successfully uploaded " + file.getOriginalFilename() + "!");
 		System.out.println("U have uploaded "+ file.getOriginalFilename());
 		String matrixContent = new String(file.getBytes());
-		print(matrixContent);
-		String[] matrixContentSplit = matrixContent.split(":");
-		String matrix1 = matrixContentSplit[0];//string of matrix need to convert to integer array / matrix
-		String matrix2 = matrixContentSplit[1];
-		print(matrix1);
-		print(matrix2);
+		print("Entire file contents"+matrixContent);
+		String [] matrixContentSplit = matrixContent.split(":");
+		for(int i=0;i<matrixContentSplit.length;i++){
+			print(matrixContentSplit[i]);
+		}
 		
 		
 		
