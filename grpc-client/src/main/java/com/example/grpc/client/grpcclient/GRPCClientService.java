@@ -73,10 +73,10 @@ public class GRPCClientService {
 		redirectAttributes.addFlashAttribute("message",
 				"You successfully uploaded " + file1.getOriginalFilename() + "!");
 		System.out.println("U have uploaded "+ file1.getOriginalFilename());
-		System.out.println("U have uploaded " + file2.getOriginalFilename());
+		// System.out.println("U have uploaded " + file2.getOriginalFilename());
 
 		String matrixContent1 = new String(file1.getBytes());
-		String matrixContent2 = new String(file2.getBytes());
+		// String matrixContent2 = new String(file2.getBytes());
 		// String [] matrixContentSplit = matrixContent.split("@");
 		// String matrix1 = matrixContentSplit[0];
 		// String matrix2 = matrixContentSplit[1];
