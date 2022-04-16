@@ -92,10 +92,12 @@ public class GRPCClientService {
 			String matrixContent = new String(file.getBytes());
 			if(matrixContent.length()!=0){
 				String [] matrixContentSplit = matrixContent.split("@");
-				String matrix1 = matrixContentSplit[0];
-				String matrix2 = matrixContentSplit[1];
-				print(matrix1);
-				print(matrix2);
+				if (matrixContentSplit.length!=1){
+					String matrix1 = matrixContentSplit[0];
+					String matrix2 = matrixContentSplit[1];
+					print(matrix1);
+					print(matrix2);
+				}
 			}
 			else{
 				System.out.println("You have uploaded an empty file");
