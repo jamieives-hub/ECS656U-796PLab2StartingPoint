@@ -92,11 +92,14 @@ public class GRPCClientService {
 			String matrixContent = new String(file.getBytes());
 			if(matrixContent.length()!=0){
 				String [] matrixContentSplit = matrixContent.split("@");
-				if (matrixContentSplit.length!=1){
+				if (matrixContentSplit.length==2){
 					String matrix1 = matrixContentSplit[0];
 					String matrix2 = matrixContentSplit[1];
 					print(matrix1);
 					print(matrix2);
+				}
+				else{
+					print("Please include 2 matrices");
 				}
 			}
 			else{
