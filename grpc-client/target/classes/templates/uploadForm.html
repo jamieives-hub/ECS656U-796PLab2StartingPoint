@@ -1,26 +1,37 @@
 <html xmlns:th="https://www.thymeleaf.org">
 
 <body>
-
-
+    <div th:if="${message}">
+        <h2 th:text="${message}" />
+    </div>
     <div>
         <form method="POST" enctype="multipart/form-data" action="/">
             <h1>Upload here</h1>
-            <input type="file" name="file1"/>
-            <input type="file" name="file2" />
-            <label for="operation">Choose an operation:</label>
-            <select name="operation" id="operation">
-                <option value="multiply">Multiply</option>
-                <option value="Addition">Addition</option>
-            </select>
-            <label>Please select deadline</label>
-            <select name="deadline" id="deadline">
-                <option value="1.0">1.0</option>
-                <option value="1.5">1.5</option>
-                <option value="2.0">2.0</option>
-                <option value="2.5">2.5</option>
-                <option value="3.0">3.0</option>
-            </select>
+            <table>
+                <tr>
+                    <input type="file" name="file1"/>
+                </tr>
+                <tr>
+                    <input type="file" name="file2" />
+                </tr>
+                <tr>
+                    <label for="operation">Choose an operation:</label>
+                    <select name="operation" id="operation">
+                        <option value="multiply">Multiply</option>
+                        <option value="Addition">Addition</option>
+                    </select>
+                </tr>
+                <tr>
+                    <label>Please select deadline</label>
+                    <select name="deadline" id="deadline">
+                        <option value="1.0">1.0</option>
+                        <option value="1.5">1.5</option>
+                        <option value="2.0">2.0</option>
+                        <option value="2.5">2.5</option>
+                        <option value="3.0">3.0</option>
+                    </select>
+                </tr>
+            </table>
 
             <input type="submit" value="Submit" />
 

@@ -82,7 +82,7 @@ public class GRPCClientService {
 				return "redirect:/";
 			}
 			else{
-				print("You have uploaded an empty file");
+				print("You have uploaded an empty file(s)");
 				redirectAttributes.addFlashAttribute("message", "You have uploaded an empty file!");
 				return "redirect:/";
 			}
