@@ -82,13 +82,15 @@ public class GRPCClientService {
 				String [] rowsM2 = matrixContent2.split("\n");
 				if (rowsM1.length == rowsM2.length && rowcolCheck(rowsM1) && rowcolCheck(rowsM2) && isPowerOfTwo(rowsM1.length))
 				{	
-					print("Both matrices are the same size and are sqaure");
+					int[][] matrix1 = buildMatrix(rowsM1);
+					int[][] matrix2 = buildMatrix(rowsM2);
+					print("Both matrices are the same size and are square");
 					redirectAttributes.addFlashAttribute("message", "Both matrices are the same size");
 					return "redirect:/";
 				}
 				else{
 					print("Please the matrices are the right size and are square");
-					redirectAttributes.addFlashAttribute("message", "Please make sure the matrices are the right size");
+					redirectAttributes.addFlashAttribute("message", "Please make sure the matrices are the right size and are square");
 					return "redirect:/";
 				}
 
@@ -107,6 +109,11 @@ public class GRPCClientService {
 		
 
 		
+	}
+	public int[][] buildMatrix(String[] rows){
+		int size = rows.length;
+		int[][] matrixEmpty = new int[size][size];
+		return matrixEmpty;
 	}
 	public boolean rowcolCheck(String[] rows){
 		// check each row is equal to number of columns
