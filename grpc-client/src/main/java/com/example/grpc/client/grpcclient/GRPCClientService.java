@@ -76,10 +76,13 @@ public class GRPCClientService {
 			String matrixContent1 = new String(file1.getBytes());
 			String matrixContent2 = new String(file2.getBytes());
 			if(matrixContent1.length()!=0 && matrixContent2.length()!=0){
+				print(matrixContent1);
+				print(matrixContent2);
+
 				return "redirect:/";
 			}
 			else{
-				System.out.println("You have uploaded an empty file");
+				print("You have uploaded an empty file");
 				redirectAttributes.addFlashAttribute("message", "You have uploaded an empty file!");
 				return "redirect:/";
 			}
