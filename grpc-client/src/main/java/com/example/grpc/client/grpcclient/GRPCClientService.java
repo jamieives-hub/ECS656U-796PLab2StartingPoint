@@ -78,8 +78,18 @@ public class GRPCClientService {
 			if(matrixContent1.length()!=0 && matrixContent2.length()!=0){
 				print(matrixContent1);
 				print(matrixContent2);
+				String [] rowsM1 = matrixContent1.split("\n");
+				String[] rowsM2 = matrixContent2.split("\n");
+				if (rowsM1.length == rowsM2.length){
+					
+					return "redirect:/";
+				}
+				else{
+					print("Please the matrices are the right size");
+					redirectAttributes.addFlashAttribute("message", "Please make sure the matrices are the right size");
+					return "redirect:/";
+				}
 
-				return "redirect:/";
 			}
 			else{
 				print("You have uploaded an empty file(s)");
