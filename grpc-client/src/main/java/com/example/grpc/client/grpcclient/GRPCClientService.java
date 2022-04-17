@@ -67,36 +67,27 @@ public class GRPCClientService {
 		return resp;
 	}
 	
-	public void handleFileUpload(@RequestParam("file1") MultipartFile file1, @RequestParam("file2") MultipartFile file2,@RequestParam("operation") String operation,@RequestParam("deadline") String deadline,RedirectAttributes redirectAttributes) throws IOException {
+	public String handleFileUpload(@RequestParam("file1") MultipartFile file1, @RequestParam("file2") MultipartFile file2,@RequestParam("operation") String operation,@RequestParam("deadline") String deadline,RedirectAttributes redirectAttributes) throws IOException {
 
 		
-		redirectAttributes.addFlashAttribute("message",
-				"You successfully uploaded " + file1.getOriginalFilename() + "!");
-		System.out.println("U have uploaded "+ file1.getOriginalFilename());
-		redirectAttributes.addFlashAttribute("message",
-				"You successfully uploaded " + file2.getOriginalFilename() + "!");
-		System.out.println("U have uploaded " + file2.getOriginalFilename());
+		print("U have uploaded "+ file1.getOriginalFilename());
+		print("U have uploaded " + file2.getOriginalFilename());
 		try{
-			String matrixContent = new String(file1.getBytes());
-			if(matrixContent.length()!=0){
-				String [] matrixContentSplit = matrixContent.split("@");
-				if (matrixContentSplit.length==2 & !matrixContentSplit[1].isEmpty()){
-					String matrix1 = matrixContentSplit[0];
-					String matrix2 = matrixContentSplit[1];
-					print(matrix1);
-					print(matrix2);
-				}
-				else{
-					print("Please include 2 matrices");
-				}
+			String matrixContent1 = new String(file1.getBytes());
+			String matrixContent2 = new String(file2.getBytes());
+			if(matrixContent1.length()!=0 & matrixContent2.length()!=0){
+				return "redirect:/";
 			}
 			else{
 				System.out.println("You have uploaded an empty file");
+				redirectAttributes.addFlashAttribute("message", "You have uploaded an empty file!");
+				return "redirect:/";
 			}
 			
 		}
 		catch (Exception e){
 			print("Error"+ e);
+			return "";
 		}
 		
 
