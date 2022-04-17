@@ -79,9 +79,11 @@ public class GRPCClientService {
 				print(matrixContent1);
 				print(matrixContent2);
 				String [] rowsM1 = matrixContent1.split("\n");
-				String[] rowsM2 = matrixContent2.split("\n");
-				if (rowsM1.length == rowsM2.length){
-					
+				String [] rowsM2 = matrixContent2.split("\n");
+				if (rowsM1.length == rowsM2.length)
+				{	
+					System.out.println(rowsM1.length);
+					System.out.println(rowsM2.length);
 					return "redirect:/";
 				}
 				else{
