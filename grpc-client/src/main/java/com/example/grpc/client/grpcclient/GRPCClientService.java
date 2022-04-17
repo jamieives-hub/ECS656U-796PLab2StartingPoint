@@ -80,10 +80,10 @@ public class GRPCClientService {
 				print(matrixContent2);
 				String [] rowsM1 = matrixContent1.split("\n");
 				String [] rowsM2 = matrixContent2.split("\n");
-				if (rowsM1.length == rowsM2.length)
+				if (rowsM1.length == rowsM2.length && rowcolCheck(rowsM1) && rowcolCheck(rowsM2))
 				{	
-					System.out.println(rowsM1.length);
-					System.out.println(rowsM2.length);
+					print("Both matrices are the same size");
+					redirectAttributes.addFlashAttribute("message", "Both matrices are the same size");
 					return "redirect:/";
 				}
 				else{
@@ -107,6 +107,19 @@ public class GRPCClientService {
 		
 
 		
+	}
+	public boolean rowcolCheck(String[] rows){
+		// check each row is equal to number of columns
+		// loop through each row, check , split array to number of rows
+		for(int i = 0; i<rows.length;i++)
+		{
+			String [] rowSplit = rows[i].split(",");
+			if(rows.length != rowSplit.length)
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 	public void print(String content){
 		System.out.println(content);
