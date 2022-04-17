@@ -67,17 +67,20 @@ public class GRPCClientService {
 		return resp;
 	}
 	
-	public void handleFileUpload(@RequestParam("file") MultipartFile file,@RequestParam("operation") String operation,@RequestParam("deadline") String deadline,RedirectAttributes redirectAttributes) throws IOException {
+	public void handleFileUpload(@RequestParam("file1") MultipartFile file1, @RequestParam("file2") MultipartFile file2,@RequestParam("operation") String operation,@RequestParam("deadline") String deadline,RedirectAttributes redirectAttributes) throws IOException {
 
 		
 		redirectAttributes.addFlashAttribute("message",
-				"You successfully uploaded " + file.getOriginalFilename() + "!");
-		System.out.println("U have uploaded "+ file.getOriginalFilename());
+				"You successfully uploaded " + file1.getOriginalFilename() + "!");
+		System.out.println("U have uploaded "+ file1.getOriginalFilename());
+		redirectAttributes.addFlashAttribute("message",
+				"You successfully uploaded " + file2.getOriginalFilename() + "!");
+		System.out.println("U have uploaded " + file2.getOriginalFilename());
 		try{
-			String matrixContent = new String(file.getBytes());
+			String matrixContent = new String(file1.getBytes());
 			if(matrixContent.length()!=0){
 				String [] matrixContentSplit = matrixContent.split("@");
-				if (matrixContentSplit.length==2){
+				if (matrixContentSplit.length==2 & !matrixContentSplit[1].isEmpty()){
 					String matrix1 = matrixContentSplit[0];
 					String matrix2 = matrixContentSplit[1];
 					print(matrix1);
