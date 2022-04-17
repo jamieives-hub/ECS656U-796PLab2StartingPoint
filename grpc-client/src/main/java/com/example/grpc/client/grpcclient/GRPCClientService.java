@@ -80,14 +80,14 @@ public class GRPCClientService {
 				print(matrixContent2);
 				String [] rowsM1 = matrixContent1.split("\n");
 				String [] rowsM2 = matrixContent2.split("\n");
-				if (rowsM1.length == rowsM2.length && rowcolCheck(rowsM1) && rowcolCheck(rowsM2))
+				if (rowsM1.length == rowsM2.length && rowcolCheck(rowsM1) && rowcolCheck(rowsM2) && isPowerOfTwo(rowsM1.length))
 				{	
-					print("Both matrices are the same size");
+					print("Both matrices are the same size and are sqaure");
 					redirectAttributes.addFlashAttribute("message", "Both matrices are the same size");
 					return "redirect:/";
 				}
 				else{
-					print("Please the matrices are the right size");
+					print("Please the matrices are the right size and are square");
 					redirectAttributes.addFlashAttribute("message", "Please make sure the matrices are the right size");
 					return "redirect:/";
 				}
@@ -124,5 +124,12 @@ public class GRPCClientService {
 	public void print(String content){
 		System.out.println(content);
 	};
+	// https://www.geeksforgeeks.org/program-to-find-whether-a-given-number-is-power-of-2/
+	public static boolean isPowerOfTwo(int n) {
+		if (n == 0)
+			return false;
+
+		return (int) (Math.ceil((Math.log(n) / Math.log(2)))) == (int) (Math.floor(((Math.log(n) / Math.log(2)))));
+	}
 	
 }
