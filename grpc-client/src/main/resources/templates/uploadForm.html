@@ -9,19 +9,24 @@
             <h1>Upload here</h1>
             <table>
                 <tr>
-                    <input type="file" name="file1"/>
+                    <td>
+                        <input type="file" name="file1"/>
+                    </td>
                 </tr>
-                <tr>
+                <tr><td>
                     <input type="file" name="file2" />
+                    </td>
                 </tr>
-                <tr>
+                <tr><td>
                     <label for="operation">Choose an operation:</label>
                     <select name="operation" id="operation">
                         <option value="multiply">Multiply</option>
                         <option value="Addition">Addition</option>
                     </select>
+                    </td>
                 </tr>
                 <tr>
+                    <td>
                     <label>Please select deadline</label>
                     <select name="deadline" id="deadline">
                         <option value="1.0">1.0</option>
@@ -30,10 +35,14 @@
                         <option value="2.5">2.5</option>
                         <option value="3.0">3.0</option>
                     </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value="Submit" /></td>
                 </tr>
             </table>
 
-            <input type="submit" value="Submit" />
+            
 
         </form>
     </div>
