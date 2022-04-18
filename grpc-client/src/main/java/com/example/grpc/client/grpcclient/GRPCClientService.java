@@ -37,6 +37,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Service
 public class GRPCClientService {
+	int[][] m1;
+	int[][] m2;
 	public String ping() {
 		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090)
 				.usePlaintext()
@@ -49,7 +51,7 @@ public class GRPCClientService {
 		return helloResponse.getPong();
 	}
 
-	public String add(int[][] m1, int[][] m2) {
+	public String add() {
 		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090)
 				.usePlaintext()
 				.build();
@@ -68,7 +70,7 @@ public class GRPCClientService {
 		return resp;
 	}
 	
-	public String multiply(int[][]m1,int[][]m2) {
+	public String multiply() {
 		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090)
 				.usePlaintext()
 				.build();
@@ -102,26 +104,20 @@ public class GRPCClientService {
 				String [] rowsM2 = matrixContent2.split("\n");
 				if (rowsM1.length == rowsM2.length && rowcolCheck(rowsM1) && rowcolCheck(rowsM2) && isPowerOfTwo(rowsM1.length))
 				{	
-					// for(int i=0; i<rowsM1.length;i++){
-					// 	print("row "+i +" " +rowsM1[i]);
-					// }
-					// for (int i = 0; i < rowsM2.length; i++) {
-					// 	print("row " + i + " " + rowsM2[i]);
-					// }
 
 					int[][] EmptyMatrix = new int[rowsM1.length][rowsM1.length];
-					int[][] matrix1 = buildMatrix(EmptyMatrix, rowsM1);
-					int[][] matrix2 = buildMatrix(EmptyMatrix, rowsM2);
-					printTwoDimensionalArray(matrix1);
+					m1 = buildMatrix(EmptyMatrix, rowsM1);
+					m2 = buildMatrix(EmptyMatrix, rowsM2);
+					printTwoDimensionalArray(m1);
 					System.out.println("");
-					printTwoDimensionalArray(matrix2);
+					printTwoDimensionalArray(m2);
 					print("Both matrices are the same size and are square");
 					redirectAttributes.addFlashAttribute("message", "Both matrices are the same size and are square");
 					if(operation == "Multiply"){
-						multiply(matrix1,matrix2);
+						multiply();
 					}
 					else{
-						add(matrix1,matrix2);
+						add();
 					}
 					return "redirect:/";
 				}
