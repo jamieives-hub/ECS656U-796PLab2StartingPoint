@@ -104,8 +104,11 @@ public class GRPCClientService {
 				{	
 					for(int i=0; i<rowsM1.length;i++){
 						print("row "+i +" " +rowsM1[i]);
+					}
+					for (int i = 0; i < rowsM2.length; i++) {
 						print("row " + i + " " + rowsM2[i]);
 					}
+
 					int[][] EmptyMatrix = new int[rowsM1.length][rowsM1.length];
 					int[][] matrix1 = buildMatrix(EmptyMatrix, rowsM1);
 					int[][] matrix2 = buildMatrix(EmptyMatrix,rowsM2);
@@ -146,7 +149,7 @@ public class GRPCClientService {
 		int r = 0;
 		int c = 0;
 		for (String row : matrixRows) {
-			for (String num : row.trim().split(" ")) {
+			for (String num : row.trim().split(",")) {
 				m[r][c] = Integer.parseInt(num);
 				c += 1;
 			}
