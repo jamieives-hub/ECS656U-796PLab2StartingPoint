@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,10 +103,14 @@ public class GRPCClientService {
 				if (rowsM1.length == rowsM2.length && rowcolCheck(rowsM1) && rowcolCheck(rowsM2) && isPowerOfTwo(rowsM1.length))
 				{	
 					for(int i=0; i<rowsM1.length;i++){
-						print("row "+i +rowsM1[i]);
+						print("row "+i +" " +rowsM1[i]);
+						print("row " + i + " " + rowsM2[i]);
 					}
-					// int[][] matrix1 = buildMatrix(rowsM1);
-					// int[][] matrix2 = buildMatrix(rowsM2);
+					int[][] EmptyMatrix = new int[rowsM1.length][rowsM1.length];
+					int[][] matrix1 = buildMatrix(EmptyMatrix, rowsM1);
+					int[][] matrix2 = buildMatrix(EmptyMatrix,rowsM2);
+					System.out.println(Arrays.deepToString(matrix1));
+					System.out.println(Arrays.deepToString(matrix2));
 					print("Both matrices are the same size and are square");
 					redirectAttributes.addFlashAttribute("message", "Both matrices are the same size and are square");
 					return "redirect:/";
@@ -137,7 +142,19 @@ public class GRPCClientService {
 	// 	int[][] matrixEmpty = new int[size][size];
 	// 	return matrixEmpty;
 	// }
-	
+	private int[][] buildMatrix(int[][] m, String[] matrixRows) {
+		int r = 0;
+		int c = 0;
+		for (String row : matrixRows) {
+			for (String num : row.trim().split(" ")) {
+				m[r][c] = Integer.parseInt(num);
+				c += 1;
+			}
+			c = 0;
+			r += 1;
+		}
+		return m;
+	}
 	
 	public boolean rowcolCheck(String[] rows){
 		// check each row is equal to number of columns
