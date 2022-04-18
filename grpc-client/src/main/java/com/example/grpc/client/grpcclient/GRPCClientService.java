@@ -49,39 +49,39 @@ public class GRPCClientService {
 		return helloResponse.getPong();
 	}
 
-	public String add() {
+	public String add(int[][] m1, int[][] m2) {
 		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090)
 				.usePlaintext()
 				.build();
 		MatrixServiceGrpc.MatrixServiceBlockingStub stub = MatrixServiceGrpc.newBlockingStub(channel);
 		MatrixReply A = stub.addBlock(MatrixRequest.newBuilder()
-				.setA00(1)
-				.setA01(2)
-				.setA10(5)
-				.setA11(6)
-				.setB00(1)
-				.setB01(2)
-				.setB10(5)
-				.setB11(6)
+				.setA00(m1[0][0])
+				.setA01(m1[0][1])
+				.setA10(m1[1][0])
+				.setA11(m1[1][1])
+				.setB00(m2[0][0])
+				.setB01(m2[0][1])
+				.setB10(m2[1][0])
+				.setB11(m2[1][1])
 				.build());
 		String resp = A.getC00() + " " + A.getC01() + "<br>" + A.getC10() + " " + A.getC11() + "\n";
 		return resp;
 	}
 	
-	public String multiply() {
+	public String multiply(int[][]m1,int[][]m2) {
 		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090)
 				.usePlaintext()
 				.build();
 		MatrixServiceGrpc.MatrixServiceBlockingStub stub = MatrixServiceGrpc.newBlockingStub(channel);
 		MatrixReply A = stub.multiplyBlock(MatrixRequest.newBuilder()
-				.setA00(1)
-				.setA01(2)
-				.setA10(5)
-				.setA11(6)
-				.setB00(2)
-				.setB01(3)
-				.setB10(6)
-				.setB11(7)
+				.setA00(m1[0][0])
+				.setA01(m1[0][1])
+				.setA10(m1[1][0])
+				.setA11(m1[1][1])
+				.setB00(m2[0][0])
+				.setB01(m2[0][1])
+				.setB10(m2[1][0])
+				.setB11(m2[1][1])
 				.build());
 		String resp = A.getC00() + A.getC01() + A.getC10() + A.getC11() + "";
 		return resp;
@@ -111,16 +111,17 @@ public class GRPCClientService {
 
 					int[][] EmptyMatrix = new int[rowsM1.length][rowsM1.length];
 					int[][] matrix1 = buildMatrix(EmptyMatrix, rowsM1);
-					int[][] matrix2 = buildMatrix(EmptyMatrix,rowsM2);
+					int[][] matrix2 = buildMatrix(EmptyMatrix, rowsM2);
 					printTwoDimensionalArray(matrix1);
+					System.out.println("");
 					printTwoDimensionalArray(matrix2);
 					print("Both matrices are the same size and are square");
 					redirectAttributes.addFlashAttribute("message", "Both matrices are the same size and are square");
 					if(operation == "Multiply"){
-						multiply();
+						multiply(matrix1,matrix2);
 					}
 					else{
-						add();
+						add(matrix1,matrix2);
 					}
 					return "redirect:/";
 				}
