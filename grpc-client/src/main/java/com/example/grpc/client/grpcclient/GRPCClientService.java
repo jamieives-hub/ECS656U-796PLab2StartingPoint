@@ -152,7 +152,7 @@ public class GRPCClientService {
 	}
 	public void print(String content){
 		System.out.println(content);
-	};
+	}
 	// https://www.geeksforgeeks.org/program-to-find-whether-a-given-number-is-power-of-2/
 	public static boolean isPowerOfTwo(int n) {
 		if (n == 0)
