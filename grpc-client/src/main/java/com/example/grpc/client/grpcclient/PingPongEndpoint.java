@@ -38,12 +38,14 @@ public class PingPongEndpoint {
     	}
     @GetMapping("/add")
 	public String add() {
-		return grpcClientService.add();
+		grpcClientService.add();
+		return "redirect:/";
 	}
 	
 	@GetMapping("/multiply")
 	public String multiply() {
-		return grpcClientService.multiply();
+		grpcClientService.multiply();
+		return "redirect:/";
 	}
 	@PostMapping("/")
 	public String fileUpload(@RequestParam("file1") MultipartFile file1, @RequestParam("file2") MultipartFile file2,@RequestParam("operation") String operation,@RequestParam("deadline") String deadline,RedirectAttributes redirectAttributes) throws IllegalStateException, IOException {
