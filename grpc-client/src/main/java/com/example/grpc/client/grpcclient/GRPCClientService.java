@@ -101,7 +101,9 @@ public class GRPCClientService {
 				String [] rowsM2 = matrixContent2.split("\n");
 				if (rowsM1.length == rowsM2.length && rowcolCheck(rowsM1) && rowcolCheck(rowsM2) && isPowerOfTwo(rowsM1.length))
 				{	
-					System.out.println(rowsM1);
+					for(int i=0; i<rowsM1.length;i++){
+						print(rowsM1[i]);
+					}
 					// int[][] matrix1 = buildMatrix(rowsM1);
 					// int[][] matrix2 = buildMatrix(rowsM2);
 					print("Both matrices are the same size and are square");
