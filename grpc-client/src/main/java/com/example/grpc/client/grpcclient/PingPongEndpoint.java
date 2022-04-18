@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -37,15 +38,15 @@ public class PingPongEndpoint {
         	return grpcClientService.ping();
     	}
     @GetMapping("/add")
+	@ResponseBody
 	public String add() {
-		grpcClientService.add();
-		return "redirect:/";
+		return grpcClientService.add();
 	}
 	
 	@GetMapping("/multiply")
+	@ResponseBody
 	public String multiply() {
-		grpcClientService.multiply();
-		return "redirect:/";
+		return grpcClientService.multiply();
 	}
 	@PostMapping("/")
 	public String fileUpload(@RequestParam("file1") MultipartFile file1, @RequestParam("file2") MultipartFile file2,@RequestParam("operation") String operation,@RequestParam("deadline") String deadline,RedirectAttributes redirectAttributes) throws IllegalStateException, IOException {
