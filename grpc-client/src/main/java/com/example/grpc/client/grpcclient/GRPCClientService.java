@@ -37,8 +37,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Service
 public class GRPCClientService {
-	int[][] m1;
-	int[][] m2;
+	private int[][] m1;
+	private int[][] m2;
 	public String ping() {
 		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090)
 				.usePlaintext()
@@ -108,9 +108,9 @@ public class GRPCClientService {
 					int[][] EmptyMatrix = new int[rowsM1.length][rowsM1.length];
 					m1 = buildMatrix(EmptyMatrix, rowsM1);
 					m2 = buildMatrix(EmptyMatrix, rowsM2);
-					printTwoDimensionalArray(m1);
-					System.out.println("");
-					printTwoDimensionalArray(m2);
+					// printTwoDimensionalArray(m1);
+					// System.out.println("");
+					// printTwoDimensionalArray(m2);
 					print("Both matrices are the same size and are square");
 					redirectAttributes.addFlashAttribute("message", "Both matrices are the same size and are square");
 					if(operation == "Multiply"){
