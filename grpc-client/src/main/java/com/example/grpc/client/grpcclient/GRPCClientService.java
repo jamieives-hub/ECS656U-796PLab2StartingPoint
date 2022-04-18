@@ -118,10 +118,12 @@ public class GRPCClientService {
 					redirectAttributes.addFlashAttribute("message", "Both matrices are the same size and are square");
 					print(operation);
 					if(operation.equals("multiply")){
-						multiply();
+						redirectAttributes.addFlashAttribute("message",
+								multiply());
 					}
 					else{
-						add();
+						redirectAttributes.addFlashAttribute("message",
+								add());
 					}
 					return "redirect:/";
 				}
