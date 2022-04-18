@@ -114,7 +114,7 @@ public class GRPCClientService {
 					print("Both matrices are the same size and are square");
 					redirectAttributes.addFlashAttribute("message", "Both matrices are the same size and are square");
 					print(operation);
-					if(operation == "multiply"){
+					if(operation.equals("multiply")){
 						multiply();
 					}
 					else{
