@@ -102,12 +102,12 @@ public class GRPCClientService {
 				String [] rowsM2 = matrixContent2.split("\n");
 				if (rowsM1.length == rowsM2.length && rowcolCheck(rowsM1) && rowcolCheck(rowsM2) && isPowerOfTwo(rowsM1.length))
 				{	
-					for(int i=0; i<rowsM1.length;i++){
-						print("row "+i +" " +rowsM1[i]);
-					}
-					for (int i = 0; i < rowsM2.length; i++) {
-						print("row " + i + " " + rowsM2[i]);
-					}
+					// for(int i=0; i<rowsM1.length;i++){
+					// 	print("row "+i +" " +rowsM1[i]);
+					// }
+					// for (int i = 0; i < rowsM2.length; i++) {
+					// 	print("row " + i + " " + rowsM2[i]);
+					// }
 
 					int[][] EmptyMatrix = new int[rowsM1.length][rowsM1.length];
 					int[][] matrix1 = buildMatrix(EmptyMatrix, rowsM1);
@@ -116,6 +116,12 @@ public class GRPCClientService {
 					printTwoDimensionalArray(matrix2);
 					print("Both matrices are the same size and are square");
 					redirectAttributes.addFlashAttribute("message", "Both matrices are the same size and are square");
+					if(operation == "Multiply"){
+						multiply();
+					}
+					else{
+						add();
+					}
 					return "redirect:/";
 				}
 				else{
