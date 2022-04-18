@@ -113,7 +113,8 @@ public class GRPCClientService {
 					// printTwoDimensionalArray(m2);
 					print("Both matrices are the same size and are square");
 					redirectAttributes.addFlashAttribute("message", "Both matrices are the same size and are square");
-					if(operation == "Multiply"){
+					print(operation);
+					if(operation == "multiply"){
 						multiply();
 					}
 					else{
