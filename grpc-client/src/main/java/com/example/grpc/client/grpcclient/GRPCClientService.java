@@ -102,7 +102,7 @@ public class GRPCClientService {
 				if (rowsM1.length == rowsM2.length && rowcolCheck(rowsM1) && rowcolCheck(rowsM2) && isPowerOfTwo(rowsM1.length))
 				{	
 					for(int i=0; i<rowsM1.length;i++){
-						print(rowsM1[i]);
+						print("row "+i +rowsM1[i]);
 					}
 					// int[][] matrix1 = buildMatrix(rowsM1);
 					// int[][] matrix2 = buildMatrix(rowsM2);
