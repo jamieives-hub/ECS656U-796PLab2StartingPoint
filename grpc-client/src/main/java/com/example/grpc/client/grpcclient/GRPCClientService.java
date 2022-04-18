@@ -71,6 +71,7 @@ public class GRPCClientService {
 	}
 	
 	public String multiply() {
+		print("hello");
 		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090)
 				.usePlaintext()
 				.build();
