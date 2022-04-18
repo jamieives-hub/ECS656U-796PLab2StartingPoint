@@ -112,8 +112,8 @@ public class GRPCClientService {
 					int[][] EmptyMatrix = new int[rowsM1.length][rowsM1.length];
 					int[][] matrix1 = buildMatrix(EmptyMatrix, rowsM1);
 					int[][] matrix2 = buildMatrix(EmptyMatrix,rowsM2);
-					System.out.println(Arrays.deepToString(matrix1));
-					System.out.println(Arrays.deepToString(matrix2));
+					printTwoDimensionalArray(matrix1);
+					printTwoDimensionalArray(matrix2);
 					print("Both matrices are the same size and are square");
 					redirectAttributes.addFlashAttribute("message", "Both matrices are the same size and are square");
 					return "redirect:/";
@@ -145,6 +145,14 @@ public class GRPCClientService {
 	// 	int[][] matrixEmpty = new int[size][size];
 	// 	return matrixEmpty;
 	// }
+	public static void printTwoDimensionalArray(int[][] a) {
+		for (int i = 0; i < a.length; i++) {
+			for (int j = 0; j < a[i].length; j++) {
+				System.out.printf("%d ", a[i][j]);
+			}
+			System.out.println();
+		}
+	}
 	private int[][] buildMatrix(int[][] m, String[] matrixRows) {
 		int r = 0;
 		int c = 0;
