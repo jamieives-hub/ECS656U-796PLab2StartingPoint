@@ -66,7 +66,7 @@ public class GRPCClientService {
 				.setB10(m2[1][0])
 				.setB11(m2[1][1])
 				.build());
-		String resp = A.getC00() + " " + A.getC01() + "\n"+ A.getC10() + " " + A.getC11() + "\n";
+		String resp = A.getC00() + " " + A.getC01() +"<h1>"+ A.getC10() + " " + A.getC11() + "/h1";
 		print(resp);
 		return resp;
 	}
