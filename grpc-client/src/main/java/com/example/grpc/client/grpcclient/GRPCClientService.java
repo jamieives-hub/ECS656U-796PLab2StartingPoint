@@ -67,6 +67,25 @@ public class GRPCClientService {
 		return resp;
 	}
 	
+	public String multiply() {
+		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090)
+				.usePlaintext()
+				.build();
+		MatrixServiceGrpc.MatrixServiceBlockingStub stub = MatrixServiceGrpc.newBlockingStub(channel);
+		MatrixReply A = stub.multiplyBlock(MatrixRequest.newBuilder()
+				.setA00(1)
+				.setA01(2)
+				.setA10(5)
+				.setA11(6)
+				.setB00(2)
+				.setB01(3)
+				.setB10(6)
+				.setB11(7)
+				.build());
+		String resp = A.getC00() + A.getC01() + A.getC10() + A.getC11() + "";
+		return resp;
+	}
+	
 	public String handleFileUpload(@RequestParam("file1") MultipartFile file1, @RequestParam("file2") MultipartFile file2,@RequestParam("operation") String operation,@RequestParam("deadline") String deadline,RedirectAttributes redirectAttributes) throws IOException {
 
 		
@@ -82,10 +101,11 @@ public class GRPCClientService {
 				String [] rowsM2 = matrixContent2.split("\n");
 				if (rowsM1.length == rowsM2.length && rowcolCheck(rowsM1) && rowcolCheck(rowsM2) && isPowerOfTwo(rowsM1.length))
 				{	
+					System.out.println(rowsM1);
 					// int[][] matrix1 = buildMatrix(rowsM1);
 					// int[][] matrix2 = buildMatrix(rowsM2);
 					print("Both matrices are the same size and are square");
-					redirectAttributes.addFlashAttribute("message", "Both matrices are the same size");
+					redirectAttributes.addFlashAttribute("message", "Both matrices are the same size and are square");
 					return "redirect:/";
 				}
 				else{
