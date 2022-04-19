@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -66,7 +67,7 @@ public class GRPCClientService {
 				.setB10(m2[1][0])
 				.setB11(m2[1][1])
 				.build());
-		String resp = A.getC00() + " " + A.getC01() +"<br>"+ A.getC10() + " " + A.getC11();
+		String resp = A.getC00() + " " + A.getC01() +"\n"+ A.getC10() + " " + A.getC11();
 		print(resp);
 		return resp;
 	}
@@ -114,6 +115,10 @@ public class GRPCClientService {
 					redirectAttributes.addFlashAttribute("message", "Both matrices are the same size and are square");
 					print(operation);
 					if(operation.equals("multiply")){
+						ArrayList<int[][]> m1Blocks = splitInBlocks(m1);
+						ArrayList<int[][]> m2Blocks = splitInBlocks(m2);
+						print(m1Blocks.toString());
+						print(m2Blocks.toString());
 						redirectAttributes.addFlashAttribute("message",
 								multiply());
 					}
@@ -144,6 +149,59 @@ public class GRPCClientService {
 		
 
 		
+	}
+	
+	public static ArrayList<int[][]> splitInBlocks(int[][] matrixToBeSplit) {
+		System.out.println("Splitting matrix in blocks");
+		ArrayList<int[][]> tempArray = new ArrayList<>();
+		// printMatrix(matrixToBeSplit);
+		int x = 2;
+		int y = matrixToBeSplit.length;
+		// System.out.println("Matrix length: " + y);
+		// here we loop through the first element of each column in the 2x2 block, and
+		// we add 2 to i because we will move 2 columns to the right
+		for (int i = 0; i < y - x + 1; i += 2) {
+			// here we loop through the row of each block, and we add 2 to j because we will
+			// move 2 positions down the row
+			for (int j = 0; j < y - x + 1; j += 2) {
+				boolean[][] assigned = new boolean[x][x];
+				int[][] tempBlock = new int[x][x];
+				// we fill the tempBlock 2x2 block with values from matrix
+				for (int p = i; p < x + i; p++) {
+					int step = 0;
+					for (int q = j; q < x + j; q++) {
+						if (step == 0 && !assigned[0][0]) {
+							tempBlock[0][0] = matrixToBeSplit[p][q];
+							assigned[0][0] = true;
+							step++;
+							continue;
+						}
+						if (step == 0 && !assigned[1][0]) {
+							tempBlock[1][0] = matrixToBeSplit[p][q];
+							assigned[1][0] = true;
+							step++;
+							continue;
+						}
+						if (step == 1 && !assigned[0][1]) {
+							tempBlock[0][1] = matrixToBeSplit[p][q];
+							assigned[0][1] = true;
+							step++;
+							continue;
+						}
+						if (step == 1 && !assigned[1][1]) {
+							tempBlock[1][1] = matrixToBeSplit[p][q];
+							assigned[1][1] = true;
+							step++;
+							continue;
+						}
+					}
+				}
+				// System.out.println("Temporary Block:");
+				// printMatrix(tempBlock);
+				tempArray.add(tempBlock); // add the 2x2 blocks to tempArray
+			}
+		}
+		return tempArray;
 	}
 	public static void printTwoDimensionalArray(int[][] a) {
 		for (int i = 0; i < a.length; i++) {
