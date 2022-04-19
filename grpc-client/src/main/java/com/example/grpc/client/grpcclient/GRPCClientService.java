@@ -108,6 +108,7 @@ public class GRPCClientService {
 				.setB11(takeBlock2[1][1])
 				.build());
 				rep.add(A);
+				print("after building block");
 				System.out.println(takeBlock1[0][0]);
 				System.out.println(takeBlock1[0][1]);
 				System.out.println(takeBlock1[1][0]);
@@ -122,13 +123,12 @@ public class GRPCClientService {
 		return resp;
 	}
 	public String getResponse(ArrayList <MatrixReply> rep){
-		int size = m1Blocked.size();
+		int size = m1.length;
 		int [][] matrixConverted = new int[size][size];
 		int k = 0;
 		for(int i = 0; i<size; i+=2){
 			for(int j=0; j<size;j+=2){
 				matrixConverted[i][j] = rep.get(k).getC00();
-				System.out.println("getresp: "+rep.get(k).getC00());
 				matrixConverted[i][j+1] = rep.get(k).getC01();
 				matrixConverted[i+1][j] = rep.get(k).getC10();
 				matrixConverted[i+1][j+1] = rep.get(k).getC11();
