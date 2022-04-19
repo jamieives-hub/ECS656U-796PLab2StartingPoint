@@ -105,7 +105,7 @@ public class GRPCClientService {
 				print(matrixContent2);
 				String [] rowsM1 = matrixContent1.split("\n");
 				String [] rowsM2 = matrixContent2.split("\n");
-				if (rowsM1.length == rowsM2.length && rowcolCheck(rowsM1) && rowcolCheck(rowsM2) && isPowerOfTwo(rowsM1.length))
+				if (rowsM1.length == rowsM2.length && rowColCheck(rowsM1) && rowColCheck(rowsM2) && isPowerOfTwo(rowsM1.length))
 				{	
 
 					int[][] EmptyMatrix = new int[rowsM1.length][rowsM1.length];
@@ -115,16 +115,12 @@ public class GRPCClientService {
 					redirectAttributes.addFlashAttribute("message", "Both matrices are the same size and are square");
 					print(operation);
 					if(operation.equals("multiply")){
-						ArrayList<int[][]> m1Blocks = splitInBlocks(m1);
-						ArrayList<int[][]> m2Blocks = splitInBlocks(m2);
-						print(m1Blocks.toString());
-						print(m2Blocks.toString());
-						redirectAttributes.addFlashAttribute("message",
-								multiply());
+						ArrayList<int[][]> m1Blocks = ConvertToBlocks(m1);
+						ArrayList<int[][]> m2Blocks = ConvertToBlocks(m2);
+						multiply();
 					}
 					else{
-						redirectAttributes.addFlashAttribute("message",
-								add());
+						add();
 					}
 					return "redirect:/";
 				}
@@ -151,66 +147,31 @@ public class GRPCClientService {
 		
 	}
 	
-	public static ArrayList<int[][]> splitInBlocks(int[][] matrixToBeSplit) {
-		System.out.println("Splitting matrix in blocks");
-		ArrayList<int[][]> tempArray = new ArrayList<>();
-		// printMatrix(matrixToBeSplit);
-		int x = 2;
-		int y = matrixToBeSplit.length;
-		// System.out.println("Matrix length: " + y);
-		// here we loop through the first element of each column in the 2x2 block, and
-		// we add 2 to i because we will move 2 columns to the right
-		for (int i = 0; i < y - x + 1; i += 2) {
-			// here we loop through the row of each block, and we add 2 to j because we will
-			// move 2 positions down the row
-			for (int j = 0; j < y - x + 1; j += 2) {
-				boolean[][] assigned = new boolean[x][x];
-				int[][] tempBlock = new int[x][x];
-				// we fill the tempBlock 2x2 block with values from matrix
-				for (int p = i; p < x + i; p++) {
-					int step = 0;
-					for (int q = j; q < x + j; q++) {
-						if (step == 0 && !assigned[0][0]) {
-							tempBlock[0][0] = matrixToBeSplit[p][q];
-							assigned[0][0] = true;
-							step++;
-							continue;
-						}
-						if (step == 0 && !assigned[1][0]) {
-							tempBlock[1][0] = matrixToBeSplit[p][q];
-							assigned[1][0] = true;
-							step++;
-							continue;
-						}
-						if (step == 1 && !assigned[0][1]) {
-							tempBlock[0][1] = matrixToBeSplit[p][q];
-							assigned[0][1] = true;
-							step++;
-							continue;
-						}
-						if (step == 1 && !assigned[1][1]) {
-							tempBlock[1][1] = matrixToBeSplit[p][q];
-							assigned[1][1] = true;
-							step++;
-							continue;
-						}
-					}
-				}
-				// System.out.println("Temporary Block:");
-				// printMatrix(tempBlock);
-				tempArray.add(tempBlock); // add the 2x2 blocks to tempArray
+	public ArrayList<int[][]> ConvertToBlocks(int[][] matrixConvert) {
+		ArrayList<int[][]> converted = new ArrayList<int[][]>();
+		int sizeOfBlock = 2;
+		int lengthOfMatrix = matrixConvert[0].length;
+		//slide by the block size
+		for (int i=0; i<lengthOfMatrix; i=i+sizeOfBlock)
+		{
+		//loop through rows
+			for (int j=0; j<lengthOfMatrix; j=j+sizeOfBlock) 
+			{
+				//loop through columns
+				int[][] newBlock = new int[sizeOfBlock][sizeOfBlock];
+				//empty block array to be filled with section of the matrixConvert array
+				newBlock[0][0] = matrixConvert[i][j];
+				newBlock[0][1] = matrixConvert[i][j+1];
+				newBlock[1][0] = matrixConvert[i+1][j];
+				newBlock[1][1] = matrixConvert[i+1][j+1];
+				converted.add(newBlock);
+				//add block to arraylist each iteration of the slide
 			}
 		}
-		return tempArray;
+		//returns 2D int array of blocks
+		return converted;
 	}
-	public static void printTwoDimensionalArray(int[][] a) {
-		for (int i = 0; i < a.length; i++) {
-			for (int j = 0; j < a[i].length; j++) {
-				System.out.printf("%d ", a[i][j]);
-			}
-			System.out.println();
-		}
-	}
+	
 	private int[][] buildMatrix(int[][] m, String[] matrixRows) {
 		int r = 0;
 		int c = 0;
@@ -225,7 +186,7 @@ public class GRPCClientService {
 		return m;
 	}
 	
-	public boolean rowcolCheck(String[] rows){
+	public boolean rowColCheck(String[] rows){
 		// check each row is equal to number of columns
 		// loop through each row, check , split array to number of rows
 		for(int i = 0; i<rows.length;i++)
