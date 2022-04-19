@@ -89,9 +89,9 @@ public class GRPCClientService {
 					m1Blocked = m1Blocks;
 					m2Blocked = m2Blocks;
 					if (operation.equals("multiply")) {
-						return "redirect:/multiply";
+						return multiply();
 					} else {
-						return "redirect:/add";
+						return add();
 					}
 				} else {
 					print("Please the matrices are the right size and are square");
@@ -130,6 +130,8 @@ public class GRPCClientService {
 		//works using 2x2 matrices
 		String resp = A.getC00() + A.getC01() + A.getC10() + A.getC11() + "";
 		print(resp);
+		redirectAttributes.addFlashAttribute("message",
+				resp);
 		return resp;
 	}
 	public String add() {
@@ -160,6 +162,8 @@ public class GRPCClientService {
 		}
 		String resp = getResponse(rep);
 		//build matrix using arraylist of blocks
+		redirectAttributes.addFlashAttribute("message",
+				resp);
 		print(resp);
 		return resp;
 	}
