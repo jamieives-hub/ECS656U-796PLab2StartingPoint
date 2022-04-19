@@ -40,6 +40,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class GRPCClientService {
 	private int[][] m1;
 	private int[][] m2;
+	private ArrayList<int[][]> m1Blocked;
+	private ArrayList<int[][]> m2Blocked;
 
 	public String ping() {
 		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090)
@@ -77,22 +79,62 @@ public class GRPCClientService {
 		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090)
 				.usePlaintext()
 				.build();
+		// MatrixServiceGrpc.MatrixServiceBlockingStub stub = MatrixServiceGrpc.newBlockingStub(channel);
+		// MatrixReply A = stub.multiplyBlock(MatrixRequest.newBuilder()
+		// 		.setA00(m1[0][0])
+		// 		.setA01(m1[0][1])
+		// 		.setA10(m1[1][0])
+		// 		.setA11(m1[1][1])
+		// 		.setB00(m2[0][0])
+		// 		.setB01(m2[0][1])
+		// 		.setB10(m2[1][0])
+		// 		.setB11(m2[1][1])
+		// 		.build());
+		// String resp = A.getC00() + A.getC01() + A.getC10() + A.getC11() + "";
+		// print(resp);
+		ArrayList<MatrixReply>rep = new ArrayList<>();
 		MatrixServiceGrpc.MatrixServiceBlockingStub stub = MatrixServiceGrpc.newBlockingStub(channel);
-		MatrixReply A = stub.multiplyBlock(MatrixRequest.newBuilder()
-				.setA00(m1[0][0])
-				.setA01(m1[0][1])
-				.setA10(m1[1][0])
-				.setA11(m1[1][1])
-				.setB00(m2[0][0])
-				.setB01(m2[0][1])
-				.setB10(m2[1][0])
-				.setB11(m2[1][1])
+		for(int i =0; i<m1Blocked.size();i++){
+			int[][] takeBlock1 = m1Blocked.get(i);
+			int[][] takeBlock2 = m2Blocked.get(i);
+			MatrixReply A = stub.multiplyBlock(MatrixRequest.newBuilder()
+				.setA00(takeBlock1[0][0])
+				.setA01(takeBlock1[0][1])
+				.setA10(takeBlock1[1][0])
+				.setA11(takeBlock1[1][1])
+				.setB00(takeBlock2[0][0])
+				.setB01(takeBlock2[0][1])
+				.setB10(takeBlock2[1][0])
+				.setB11(takeBlock2[1][1])
 				.build());
-		String resp = A.getC00() + A.getC01() + A.getC10() + A.getC11() + "";
-		print(resp);
+			rep.add(A);
+		}
+		String resp = getResponse(rep);
 		return resp;
 	}
-	
+	public String getResponse(ArrayList <MatrixReply> rep){
+		int size = m1.length;
+		int [][] matrixConverted = new int[size][size];
+		int k = 0;
+		for(int i = 0; i<size; i+=2){
+			for(int j=0; j<size;j+=2){
+				matrixConverted[i][j] = rep.get(k).getC00();
+				matrixConverted[i][j+1] = rep.get(k).getC01();
+				matrixConverted[i+1][j] = rep.get(k).getC10();
+				matrixConverted[i+1][j+1] = rep.get(k).getC11();
+			}
+
+		}
+		String resp = "";
+		for(int i = 0; i<matrixConverted.length;i++){
+			for(int j=0; j<matrixConverted[i].length;j++){
+				resp +=matrixConverted[i][j]+"";
+			}
+			resp+="<br>";
+
+		}
+		return resp;
+	}
 	public String handleFileUpload(@RequestParam("file1") MultipartFile file1, @RequestParam("file2") MultipartFile file2,@RequestParam("operation") String operation,@RequestParam("deadline") String deadline,RedirectAttributes redirectAttributes) throws IOException {
 
 		
@@ -115,11 +157,11 @@ public class GRPCClientService {
 					print("Both matrices are the same size and are square");
 					redirectAttributes.addFlashAttribute("message", "Both matrices are the same size and are square");
 					print(operation);
+					ArrayList<int[][]> m1Blocks = ConvertToBlocks(m1);
+					ArrayList<int[][]> m2Blocks = ConvertToBlocks(m2);
+					m1Blocked = m1Blocks;
+					m2Blocked = m2Blocks;
 					if(operation.equals("multiply")){
-						ArrayList<int[][]> m1Blocks = ConvertToBlocks(m1);
-						ArrayList<int[][]> m2Blocks = ConvertToBlocks(m2);
-						System.out.println("Address check 1: "+m1Blocks);
-						System.out.println("Address check 2: " + m2Blocks);
 						multiply();
 					}
 					else{
