@@ -40,6 +40,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class GRPCClientService {
 	private int[][] m1;
 	private int[][] m2;
+
 	public String ping() {
 		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090)
 				.usePlaintext()
@@ -117,7 +118,8 @@ public class GRPCClientService {
 					if(operation.equals("multiply")){
 						ArrayList<int[][]> m1Blocks = ConvertToBlocks(m1);
 						ArrayList<int[][]> m2Blocks = ConvertToBlocks(m2);
-						System.out.println("Address check: "+m1Blocks);
+						System.out.println("Address check 1: "+m1Blocks);
+						System.out.println("Address check 2: " + m2Blocks);
 						multiply();
 					}
 					else{
