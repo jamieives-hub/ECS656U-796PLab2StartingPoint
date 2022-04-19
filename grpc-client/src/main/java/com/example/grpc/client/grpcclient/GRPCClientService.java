@@ -162,7 +162,7 @@ public class GRPCClientService {
 					m1Blocked = m1Blocks;
 					m2Blocked = m2Blocks;
 					if(operation.equals("multiply")){
-						multiply();
+						print(multiply());
 					}
 					else{
 						add();
