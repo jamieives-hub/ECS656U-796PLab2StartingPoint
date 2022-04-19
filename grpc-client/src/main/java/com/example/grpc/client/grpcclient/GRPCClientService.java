@@ -108,8 +108,18 @@ public class GRPCClientService {
 				.setB11(takeBlock2[1][1])
 				.build());
 				rep.add(A);
+				System.out.println(takeBlock1[0][0]);
+				System.out.println(takeBlock1[0][1]);
+				System.out.println(takeBlock1[1][0]);
+				System.out.println(takeBlock1[1][1]);
+				System.out.println(takeBlock2[0][0]);
+				System.out.println(takeBlock2[0][1]);
+				System.out.println(takeBlock2[1][0]);
+				System.out.println(takeBlock2[1][1]);
 		}
+		
 		String resp = getResponse(rep);
+		print(resp);
 		return resp;
 	}
 	public String getResponse(ArrayList <MatrixReply> rep){
@@ -162,7 +172,7 @@ public class GRPCClientService {
 					m1Blocked = m1Blocks;
 					m2Blocked = m2Blocks;
 					if(operation.equals("multiply")){
-						multiply();
+						print(multiply());
 					}
 					else{
 						print(add());
