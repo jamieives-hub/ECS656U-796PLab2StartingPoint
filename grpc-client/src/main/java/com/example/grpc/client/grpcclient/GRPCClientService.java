@@ -169,14 +169,11 @@ public class GRPCClientService {
 					m1Blocked = m1Blocks;
 					m2Blocked = m2Blocks;
 					if(operation.equals("multiply")){
-						redirectAttributes.addFlashAttribute("message",
-								multiply());
+						return "redirect:/multiply";
 					}
 					else{
-						redirectAttributes.addFlashAttribute("message",
-								add());
+						return "redirect:/add";
 					}
-					return "redirect:/";
 				}
 				else{
 					print("Please the matrices are the right size and are square");
