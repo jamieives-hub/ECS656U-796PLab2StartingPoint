@@ -72,7 +72,6 @@ public class GRPCClientService {
 	}
 	
 	public String multiply() {
-		print("hello");
 		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090)
 				.usePlaintext()
 				.build();
@@ -111,18 +110,15 @@ public class GRPCClientService {
 					int[][] EmptyMatrix = new int[rowsM1.length][rowsM1.length];
 					m1 = buildMatrix(EmptyMatrix, rowsM1);
 					m2 = buildMatrix(EmptyMatrix, rowsM2);
-					// printTwoDimensionalArray(m1);
-					// System.out.println("");
-					// printTwoDimensionalArray(m2);
 					print("Both matrices are the same size and are square");
 					redirectAttributes.addFlashAttribute("message", "Both matrices are the same size and are square");
 					print(operation);
 					if(operation.equals("multiply")){
-						redirectAttributes.addFlashAttribute("message",
+						redirectAttributes.addAttribute("message",
 								multiply());
 					}
 					else{
-						redirectAttributes.addFlashAttribute("message",
+						redirectAttributes.addAttribute("message",
 								add());
 					}
 					return "redirect:/";
@@ -149,11 +145,6 @@ public class GRPCClientService {
 
 		
 	}
-	// public int[][] buildMatrix(String[] rows){
-	// 	int size = rows.length;
-	// 	int[][] matrixEmpty = new int[size][size];
-	// 	return matrixEmpty;
-	// }
 	public static void printTwoDimensionalArray(int[][] a) {
 		for (int i = 0; i < a.length; i++) {
 			for (int j = 0; j < a[i].length; j++) {
