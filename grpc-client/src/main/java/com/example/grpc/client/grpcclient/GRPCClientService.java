@@ -55,6 +55,21 @@ public class GRPCClientService {
 		return helloResponse.getPong();
 	}
 
+	// int a[][] = { { 1, 1, 1 }, { 2, 2, 2 }, { 3, 3, 3 } };
+	// int b[][] = { { 1, 1, 1 }, { 2, 2, 2 }, { 3, 3, 3 } };
+	// int c[][] = new int[3][3];
+	// for(int i = 0;i<3;i++)
+	// {
+	// 	for (int j = 0; j < 3; j++) {
+	// 		c[i][j] = 0;
+	// 		for (int k = 0; k < 3; k++) {
+	// 			c[i][j] += a[i][k] * b[k][j];
+	// 		} // end of k loop
+	// 		System.out.print(c[i][j] + " "); // printing matrix element
+	// 		} // end of j loop
+	// 		System.out.println();// new line
+	// 	}
+	// }}
 	public String multiply() {
 		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090)
 				.usePlaintext()
@@ -70,11 +85,10 @@ public class GRPCClientService {
 				.setB10(m2[1][0])
 				.setB11(m2[1][1])
 				.build());
-		String resp = A.getC00() + " " + A.getC01() +"\n"+ A.getC10() + " " + A.getC11();
-		print(resp);
+		
+		String resp = A.getC00() + A.getC01() + A.getC10() + A.getC11() + "";
 		return resp;
 	}
-	
 	public String add() {
 		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090)
 				.usePlaintext()
@@ -97,16 +111,15 @@ public class GRPCClientService {
 				rep.add(A);
 				
 		}
-		
+		channel.shutdown();
 		String resp = getResponse(rep);
 		return resp;
 	}
 	public String getResponse(ArrayList <MatrixReply> rep){
-		int size = m1.length;
-		int [][] matrixConverted = new int[size][size];
+		int [][] matrixConverted = new int[m1.length][m1.length];
 		int k = 0;
-		for(int i = 0; i<size; i+=2){
-			for(int j=0; j<size;j+=2){
+		for(int i = 0; i< m1.length; i+=2){
+			for(int j=0; j< m1.length;j+=2){
 				matrixConverted[i][j] = rep.get(k).getC00();
 				matrixConverted[i][j+1] = rep.get(k).getC01();
 				matrixConverted[i+1][j] = rep.get(k).getC10();
@@ -115,12 +128,16 @@ public class GRPCClientService {
 				
 			}
 		}
+		return concatenateString(matrixConverted);
+		
+	}
+	public String concatenateString(int[][] matrixConverted){
 		String resp = " ";
-		for(int i = 0; i<matrixConverted.length;i++){
-			for(int j=0; j<matrixConverted[i].length;j++){
-				resp +=matrixConverted[i][j]+" ";
+		for (int i = 0; i < matrixConverted.length; i++) {
+			for (int j = 0; j < matrixConverted[i].length; j++) {
+				resp += matrixConverted[i][j] + " ";
 			}
-			resp+="<br>";
+			resp += "\n";
 
 		}
 		return resp;
@@ -198,13 +215,9 @@ public class GRPCClientService {
 				int[][] newBlock = new int[sizeOfBlock][sizeOfBlock];
 				//empty block array to be filled with section of the matrixConvert array
 				newBlock[0][0] = matrixConvert[i][j];
-				System.out.println(newBlock[0][0]);
 				newBlock[0][1] = matrixConvert[i][j+1];
-				System.out.println(newBlock[0][1]);
 				newBlock[1][0] = matrixConvert[i+1][j];
-				System.out.println(newBlock[1][0]);
 				newBlock[1][1] = matrixConvert[i+1][j+1];
-				System.out.println(newBlock[1][1]);
 				converted.add(newBlock);
 				//add block to arraylist each iteration of the slide
 			}
