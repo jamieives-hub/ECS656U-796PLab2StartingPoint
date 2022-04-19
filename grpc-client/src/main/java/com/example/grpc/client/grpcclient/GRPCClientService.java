@@ -87,6 +87,7 @@ public class GRPCClientService {
 				.build());
 		
 		String resp = A.getC00() + A.getC01() + A.getC10() + A.getC11() + "";
+		print(resp);
 		return resp;
 	}
 	public String add() {
@@ -113,6 +114,7 @@ public class GRPCClientService {
 		}
 		channel.shutdown();
 		String resp = getResponse(rep);
+		print(resp);
 		return resp;
 	}
 	public String getResponse(ArrayList <MatrixReply> rep){
@@ -137,7 +139,7 @@ public class GRPCClientService {
 			for (int j = 0; j < matrixConverted[i].length; j++) {
 				resp += matrixConverted[i][j] + " ";
 			}
-			resp += "\n";
+			resp += "<br>";
 
 		}
 		return resp;
