@@ -78,20 +78,7 @@ public class GRPCClientService {
 	public String add() {
 		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090)
 				.usePlaintext()
-				.build();
-		// MatrixServiceGrpc.MatrixServiceBlockingStub stub = MatrixServiceGrpc.newBlockingStub(channel);
-		// MatrixReply A = stub.multiplyBlock(MatrixRequest.newBuilder()
-		// 		.setA00(m1[0][0])
-		// 		.setA01(m1[0][1])
-		// 		.setA10(m1[1][0])
-		// 		.setA11(m1[1][1])
-		// 		.setB00(m2[0][0])
-		// 		.setB01(m2[0][1])
-		// 		.setB10(m2[1][0])
-		// 		.setB11(m2[1][1])
-		// 		.build());
-		// String resp = A.getC00() + A.getC01() + A.getC10() + A.getC11() + "";
-		// print(resp);
+				.build();		
 		ArrayList<MatrixReply>rep = new ArrayList<>();
 		MatrixServiceGrpc.MatrixServiceBlockingStub stub = MatrixServiceGrpc.newBlockingStub(channel);
 		for(int i =0; i<m1Blocked.size();i++){
@@ -108,16 +95,7 @@ public class GRPCClientService {
 				.setB11(takeBlock2[1][1])
 				.build());
 				rep.add(A);
-				print("after building block");
-				System.out.println(takeBlock1[0][0]);
-				System.out.println(takeBlock1[0][1]);
-				System.out.println(takeBlock1[1][0]);
-				System.out.println(takeBlock1[1][1]);
-				System.out.println(takeBlock2[0][0]);
-				System.out.println(takeBlock2[0][1]);
-				System.out.println(takeBlock2[1][0]);
-				System.out.println(takeBlock2[1][1]);
-				print("blocks end");
+				
 		}
 		
 		String resp = getResponse(rep);
