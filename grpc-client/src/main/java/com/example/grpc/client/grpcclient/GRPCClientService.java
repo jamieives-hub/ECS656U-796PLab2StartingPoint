@@ -107,7 +107,7 @@ public class GRPCClientService {
 				.setB10(takeBlock2[1][0])
 				.setB11(takeBlock2[1][1])
 				.build());
-			rep.add(A);
+				rep.add(A);
 		}
 		String resp = getResponse(rep);
 		return resp;
@@ -122,12 +122,13 @@ public class GRPCClientService {
 				matrixConverted[i][j+1] = rep.get(k).getC01();
 				matrixConverted[i+1][j] = rep.get(k).getC10();
 				matrixConverted[i+1][j+1] = rep.get(k).getC11();
+				k++;
 			}
 		}
 		String resp = "";
 		for(int i = 0; i<matrixConverted.length;i++){
 			for(int j=0; j<matrixConverted[i].length;j++){
-				resp +=matrixConverted[i][j]+"";
+				resp +=matrixConverted[i][j]+" ";
 			}
 			resp+="<br>";
 
