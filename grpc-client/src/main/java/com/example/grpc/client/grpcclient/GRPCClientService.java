@@ -97,7 +97,7 @@ public class GRPCClientService {
 		for(int i =0; i<m1Blocked.size();i++){
 			int[][] takeBlock1 = m1Blocked.get(i);
 			int[][] takeBlock2 = m2Blocked.get(i);
-			MatrixReply A = stub.multiplyBlock(MatrixRequest.newBuilder()
+			MatrixReply A = stub.addBlock(MatrixRequest.newBuilder()
 				.setA00(takeBlock1[0][0])
 				.setA01(takeBlock1[0][1])
 				.setA10(takeBlock1[1][0])
@@ -109,14 +109,15 @@ public class GRPCClientService {
 				.build());
 				rep.add(A);
 				print("after building block");
-				// System.out.println(takeBlock1[0][0]);
-				// System.out.println(takeBlock1[0][1]);
-				// System.out.println(takeBlock1[1][0]);
-				// System.out.println(takeBlock1[1][1]);
-				// System.out.println(takeBlock2[0][0]);
-				// System.out.println(takeBlock2[0][1]);
-				// System.out.println(takeBlock2[1][0]);
-				// System.out.println(takeBlock2[1][1]);
+				System.out.println(takeBlock1[0][0]);
+				System.out.println(takeBlock1[0][1]);
+				System.out.println(takeBlock1[1][0]);
+				System.out.println(takeBlock1[1][1]);
+				System.out.println(takeBlock2[0][0]);
+				System.out.println(takeBlock2[0][1]);
+				System.out.println(takeBlock2[1][0]);
+				System.out.println(takeBlock2[1][1]);
+				print("blocks end");
 		}
 		
 		String resp = getResponse(rep);
@@ -136,7 +137,7 @@ public class GRPCClientService {
 				
 			}
 		}
-		String resp = "";
+		String resp = " ";
 		for(int i = 0; i<matrixConverted.length;i++){
 			for(int j=0; j<matrixConverted[i].length;j++){
 				resp +=matrixConverted[i][j]+" ";
@@ -173,12 +174,12 @@ public class GRPCClientService {
 					m1Blocked = m1Blocks;
 					m2Blocked = m2Blocks;
 					if(operation.equals("multiply")){
-						return multiply();
+						print(multiply());
 					}
 					else{
-						return add();
+						print(add());
 					}
-					// return "redirect:/";
+					return "redirect:/";
 				}
 				else{
 					print("Please the matrices are the right size and are square");
