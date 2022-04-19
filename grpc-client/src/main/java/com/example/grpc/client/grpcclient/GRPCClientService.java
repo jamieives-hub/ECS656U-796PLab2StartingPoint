@@ -119,7 +119,6 @@ public class GRPCClientService {
 		}
 		
 		String resp = getResponse(rep);
-		print(resp);
 		return resp;
 	}
 	public String getResponse(ArrayList <MatrixReply> rep){
@@ -133,6 +132,10 @@ public class GRPCClientService {
 				matrixConverted[i+1][j] = rep.get(k).getC10();
 				matrixConverted[i+1][j+1] = rep.get(k).getC11();
 				k++;
+				System.out.println(rep.get(k).getC00());
+				System.out.println(rep.get(k).getC01());
+				System.out.println(rep.get(k).getC10());
+				System.out.println(rep.get(k).getC11());
 			}
 		}
 		String resp = "";
