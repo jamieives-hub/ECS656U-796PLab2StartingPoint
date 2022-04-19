@@ -109,14 +109,14 @@ public class GRPCClientService {
 				.build());
 				rep.add(A);
 				print("after building block");
-				System.out.println(takeBlock1[0][0]);
-				System.out.println(takeBlock1[0][1]);
-				System.out.println(takeBlock1[1][0]);
-				System.out.println(takeBlock1[1][1]);
-				System.out.println(takeBlock2[0][0]);
-				System.out.println(takeBlock2[0][1]);
-				System.out.println(takeBlock2[1][0]);
-				System.out.println(takeBlock2[1][1]);
+				// System.out.println(takeBlock1[0][0]);
+				// System.out.println(takeBlock1[0][1]);
+				// System.out.println(takeBlock1[1][0]);
+				// System.out.println(takeBlock1[1][1]);
+				// System.out.println(takeBlock2[0][0]);
+				// System.out.println(takeBlock2[0][1]);
+				// System.out.println(takeBlock2[1][0]);
+				// System.out.println(takeBlock2[1][1]);
 		}
 		
 		String resp = getResponse(rep);
@@ -173,12 +173,12 @@ public class GRPCClientService {
 					m1Blocked = m1Blocks;
 					m2Blocked = m2Blocks;
 					if(operation.equals("multiply")){
-						print(multiply());
+						return multiply();
 					}
 					else{
-						print(add());
+						return add();
 					}
-					return "redirect:/";
+					// return "redirect:/";
 				}
 				else{
 					print("Please the matrices are the right size and are square");
