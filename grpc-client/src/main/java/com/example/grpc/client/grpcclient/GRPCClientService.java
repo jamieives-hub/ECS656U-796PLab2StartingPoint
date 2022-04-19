@@ -206,7 +206,7 @@ public class GRPCClientService {
 		int lengthOfMatrix = matrixConvert[0].length;
 		//slide by the block size
 		int counter=0;
-		while(counter<lengthOfMatrix-1){
+		while(counter<lengthOfMatrix){
 			// //loop through rows
 				for (int j=0; j<lengthOfMatrix; j=j+sizeOfBlock) 
 				{
@@ -221,7 +221,6 @@ public class GRPCClientService {
 					//add block to arraylist each iteration of the slide
 				}
 			counter = counter+sizeOfBlock;
-			break;
 		}
 		//returns 2D int array of blocks
 		return converted;
