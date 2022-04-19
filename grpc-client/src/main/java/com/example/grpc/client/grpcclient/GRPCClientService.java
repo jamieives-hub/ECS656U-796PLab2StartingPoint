@@ -205,23 +205,22 @@ public class GRPCClientService {
 		int sizeOfBlock = 2;
 		int lengthOfMatrix = matrixConvert[0].length;
 		//slide by the block size
-		while(true){
-			for (int i=0; i<lengthOfMatrix; i=i+sizeOfBlock)
-			{
-			//loop through rows
+		int counter=0;
+		while(counter<lengthOfMatrix){
+			// //loop through rows
 				for (int j=0; j<lengthOfMatrix; j=j+sizeOfBlock) 
 				{
 					//loop through columns
 					int[][] newBlock = new int[sizeOfBlock][sizeOfBlock];
 					//empty block array to be filled with section of the matrixConvert array
-					newBlock[0][0] = matrixConvert[i][j];
-					newBlock[0][1] = matrixConvert[i][j+1];
-					newBlock[1][0] = matrixConvert[i+1][j];
-					newBlock[1][1] = matrixConvert[i+1][j+1];
+					newBlock[0][0] = matrixConvert[counter][j];
+					newBlock[0][1] = matrixConvert[counter][j+1];
+					newBlock[1][0] = matrixConvert[counter+1][j];
+					newBlock[1][1] = matrixConvert[counter+1][j+1];
 					converted.add(newBlock);
 					//add block to arraylist each iteration of the slide
 				}
-			}
+			counter = counter+sizeOfBlock;
 			break;
 		}
 		//returns 2D int array of blocks
