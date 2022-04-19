@@ -123,7 +123,6 @@ public class GRPCClientService {
 				matrixConverted[i+1][j] = rep.get(k).getC10();
 				matrixConverted[i+1][j+1] = rep.get(k).getC11();
 			}
-
 		}
 		String resp = "";
 		for(int i = 0; i<matrixConverted.length;i++){
