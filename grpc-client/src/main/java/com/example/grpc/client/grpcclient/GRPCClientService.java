@@ -152,10 +152,12 @@ public class GRPCClientService {
 					m1Blocked = m1Blocks;
 					m2Blocked = m2Blocks;
 					if(operation.equals("multiply")){
-						print(multiply());
+						redirectAttributes.addFlashAttribute("message",
+								multiply());
 					}
 					else{
-						print(add());
+						redirectAttributes.addFlashAttribute("message",
+								add());
 					}
 					return "redirect:/";
 				}
