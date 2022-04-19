@@ -117,6 +117,7 @@ public class GRPCClientService {
 					if(operation.equals("multiply")){
 						ArrayList<int[][]> m1Blocks = ConvertToBlocks(m1);
 						ArrayList<int[][]> m2Blocks = ConvertToBlocks(m2);
+						System.out.println("Address check: "+m1Blocks);
 						multiply();
 					}
 					else{
@@ -161,9 +162,13 @@ public class GRPCClientService {
 				int[][] newBlock = new int[sizeOfBlock][sizeOfBlock];
 				//empty block array to be filled with section of the matrixConvert array
 				newBlock[0][0] = matrixConvert[i][j];
+				System.out.println(newBlock[0][0]);
 				newBlock[0][1] = matrixConvert[i][j+1];
+				System.out.println(newBlock[0][1]);
 				newBlock[1][0] = matrixConvert[i+1][j];
+				System.out.println(newBlock[1][0]);
 				newBlock[1][1] = matrixConvert[i+1][j+1];
+				System.out.println(newBlock[1][1]);
 				converted.add(newBlock);
 				//add block to arraylist each iteration of the slide
 			}
