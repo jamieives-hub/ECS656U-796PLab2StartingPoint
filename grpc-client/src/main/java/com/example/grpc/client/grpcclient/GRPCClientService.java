@@ -75,6 +75,7 @@ public class GRPCClientService {
 				.usePlaintext()
 				.build();
 		MatrixServiceGrpc.MatrixServiceBlockingStub stub = MatrixServiceGrpc.newBlockingStub(channel);
+
 		MatrixReply A = stub.multiplyBlock(MatrixRequest.newBuilder()
 				.setA00(m1[0][0])
 				.setA01(m1[0][1])
@@ -112,7 +113,6 @@ public class GRPCClientService {
 				rep.add(A);
 				
 		}
-		channel.shutdown();
 		String resp = getResponse(rep);
 		print(resp);
 		return resp;
@@ -161,13 +161,13 @@ public class GRPCClientService {
 				{	
 
 					int[][] EmptyMatrix = new int[rowsM1.length][rowsM1.length];
-					m1 = buildMatrix(EmptyMatrix, rowsM1);
-					m2 = buildMatrix(EmptyMatrix, rowsM2);
+					m1 = createIntMatrix(EmptyMatrix, rowsM1);
+					m2 = createIntMatrix(EmptyMatrix, rowsM2);
 					print("Both matrices are the same size and are square");
 					redirectAttributes.addFlashAttribute("message", "Both matrices are the same size and are square");
 					print(operation);
-					ArrayList<int[][]> m1Blocks = ConvertToBlocks(m1);
-					ArrayList<int[][]> m2Blocks = ConvertToBlocks(m2);
+					ArrayList<int[][]> m1Blocks = convertToBlocks(m1);
+					ArrayList<int[][]> m2Blocks = convertToBlocks(m2);
 					m1Blocked = m1Blocks;
 					m2Blocked = m2Blocks;
 					if(operation.equals("multiply")){
@@ -200,43 +200,47 @@ public class GRPCClientService {
 		
 	}
 	
-	public ArrayList<int[][]> ConvertToBlocks(int[][] matrixConvert) {
+	public ArrayList<int[][]> convertToBlocks(int[][] matrixConvert) {
 		ArrayList<int[][]> converted = new ArrayList<int[][]>();
 		int sizeOfBlock = 2;
 		int lengthOfMatrix = matrixConvert[0].length;
 		//slide by the block size
-		for (int i=0; i<lengthOfMatrix; i=i+sizeOfBlock)
-		{
-		//loop through rows
-			for (int j=0; j<lengthOfMatrix; j=j+sizeOfBlock) 
+		while(true){
+			for (int i=0; i<lengthOfMatrix; i=i+sizeOfBlock)
 			{
-				//loop through columns
-				int[][] newBlock = new int[sizeOfBlock][sizeOfBlock];
-				//empty block array to be filled with section of the matrixConvert array
-				newBlock[0][0] = matrixConvert[i][j];
-				newBlock[0][1] = matrixConvert[i][j+1];
-				newBlock[1][0] = matrixConvert[i+1][j];
-				newBlock[1][1] = matrixConvert[i+1][j+1];
-				converted.add(newBlock);
-				//add block to arraylist each iteration of the slide
+			//loop through rows
+				for (int j=0; j<lengthOfMatrix; j=j+sizeOfBlock) 
+				{
+					//loop through columns
+					int[][] newBlock = new int[sizeOfBlock][sizeOfBlock];
+					//empty block array to be filled with section of the matrixConvert array
+					newBlock[0][0] = matrixConvert[i][j];
+					newBlock[0][1] = matrixConvert[i][j+1];
+					newBlock[1][0] = matrixConvert[i+1][j];
+					newBlock[1][1] = matrixConvert[i+1][j+1];
+					converted.add(newBlock);
+					//add block to arraylist each iteration of the slide
+				}
 			}
+			break;
 		}
 		//returns 2D int array of blocks
 		return converted;
 	}
 	
-	private int[][] buildMatrix(int[][] m, String[] matrixRows) {
-		int r = 0;
-		int c = 0;
+	private int[][] createIntMatrix(int[][] matrix, String[] matrixRows) {
+		int counter1 = 0;
+		int counter2 = 0;
 		for (String row : matrixRows) {
 			for (String num : row.trim().split(",")) {
-				m[r][c] = Integer.parseInt(num);
-				c += 1;
+				matrix[counter1][counter2] = Integer.parseInt(num);
+				counter2 += 1;
 			}
-			c = 0;
-			r += 1;
+			counter1 += 1;
+			counter2 = 0;
+			
 		}
-		return m;
+		return matrix;
 	}
 	
 	public boolean rowColCheck(String[] rows){
