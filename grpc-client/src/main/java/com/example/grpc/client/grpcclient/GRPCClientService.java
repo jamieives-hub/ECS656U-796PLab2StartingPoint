@@ -55,21 +55,63 @@ public class GRPCClientService {
 		return helloResponse.getPong();
 	}
 
-	// int a[][] = { { 1, 1, 1 }, { 2, 2, 2 }, { 3, 3, 3 } };
-	// int b[][] = { { 1, 1, 1 }, { 2, 2, 2 }, { 3, 3, 3 } };
-	// int c[][] = new int[3][3];
-	// for(int i = 0;i<3;i++)
-	// {
-	// 	for (int j = 0; j < 3; j++) {
-	// 		c[i][j] = 0;
-	// 		for (int k = 0; k < 3; k++) {
-	// 			c[i][j] += a[i][k] * b[k][j];
-	// 		} // end of k loop
-	// 		System.out.print(c[i][j] + " "); // printing matrix element
-	// 		} // end of j loop
-	// 		System.out.println();// new line
-	// 	}
-	// }}
+
+	public String handleFileUpload(@RequestParam("file1") MultipartFile file1,
+			@RequestParam("file2") MultipartFile file2, @RequestParam("operation") String operation,
+			@RequestParam("deadline") String deadline, RedirectAttributes redirectAttributes) throws IOException {
+
+		print("U have uploaded " + file1.getOriginalFilename());
+		print("U have uploaded " + file2.getOriginalFilename());
+		try {
+			String matrixContent1 = new String(file1.getBytes());
+			String matrixContent2 = new String(file2.getBytes());
+			if (matrixContent1.length() != 0 && matrixContent2.length() != 0) {
+				print(matrixContent1);
+				print(matrixContent2);
+				String[] rowsM1 = matrixContent1.split("\n");
+				String[] rowsM2 = matrixContent2.split("\n");
+				//checks if the matrix is valid comparing the matrices lengths to check if square using rowcolcheck also
+				//checks if power of two using the method found online
+				if (rowsM1.length == rowsM2.length && rowColCheck(rowsM1) && rowColCheck(rowsM2)
+						&& isPowerOfTwo(rowsM1.length)) {
+					//if these cases are true, creates empty array
+					int[][] EmptyMatrix = new int[rowsM1.length][rowsM1.length];
+					//converts the matrices into int[][] arrays and stores as global variable
+					m1 = createIntMatrix(EmptyMatrix, rowsM1);
+					m2 = createIntMatrix(EmptyMatrix, rowsM2);
+					print("Both matrices are the same size and are square");
+					redirectAttributes.addFlashAttribute("message", "Both matrices are the same size and are square");
+					print(operation);
+					//uses global variables and converts the int[][] into Arraylists of the matrices split into blocks (2x2)
+					ArrayList<int[][]> m1Blocks = convertToBlocks(m1);
+					ArrayList<int[][]> m2Blocks = convertToBlocks(m2);
+					//sets as global variable for use in add and multiply
+					m1Blocked = m1Blocks;
+					m2Blocked = m2Blocks;
+					if (operation.equals("multiply")) {
+						return "redirect:/multiply";
+					} else {
+						return "redirect:/add";
+					}
+				} else {
+					print("Please the matrices are the right size and are square");
+					redirectAttributes.addFlashAttribute("message",
+							"Please make sure the matrices are the right size and are square");
+					return "redirect:/";
+				}
+
+			} else {
+				print("You have uploaded an empty file(s)");
+				redirectAttributes.addFlashAttribute("message", "You have uploaded an empty file!");
+				return "redirect:/";
+			}
+
+		} catch (Exception e) {
+			print("Error " + e);
+			return "";
+		}
+
+	}
 	public String multiply() {
 		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090)
 				.usePlaintext()
@@ -85,7 +127,7 @@ public class GRPCClientService {
 				.setB10(m2[1][0])
 				.setB11(m2[1][1])
 				.build());
-		
+		//works using 2x2 matrices
 		String resp = A.getC00() + A.getC01() + A.getC10() + A.getC11() + "";
 		print(resp);
 		return resp;
@@ -96,8 +138,10 @@ public class GRPCClientService {
 				.build();		
 		ArrayList<MatrixReply>rep = new ArrayList<>();
 		MatrixServiceGrpc.MatrixServiceBlockingStub stub = MatrixServiceGrpc.newBlockingStub(channel);
+		//loop through list of blocks
 		for(int counter =0; counter<m1Blocked.size();counter++)
 		{
+			//retrieve each block to be added
 			int[][] takeBlock1 = m1Blocked.get(counter);
 			int[][] takeBlock2 = m2Blocked.get(counter);
 			MatrixReply A = stub.addBlock(MatrixRequest.newBuilder()
@@ -111,12 +155,15 @@ public class GRPCClientService {
 				.setB11(takeBlock2[1][1])
 				.build());
 				rep.add(A);
+				//build a matrixreply arraylist of blocks
 				
 		}
 		String resp = getResponse(rep);
+		//build matrix using arraylist of blocks
 		print(resp);
 		return resp;
 	}
+
 	public String getResponse(ArrayList <MatrixReply> rep){
 		int [][] matrixConverted = new int[m1.length][m1.length];
 		int k = 0;
@@ -127,12 +174,13 @@ public class GRPCClientService {
 				matrixConverted[i+1][j] = rep.get(k).getC10();
 				matrixConverted[i+1][j+1] = rep.get(k).getC11();
 				k++;
-				
+				//rebuilds int[][] array
 			}
 		}
 		return concatenateString(matrixConverted);
 		
 	}
+	//converts int[][] to string array to be returned to front end
 	public String concatenateString(int[][] matrixConverted){
 		String resp = " ";
 		for (int i = 0; i < matrixConverted.length; i++) {
@@ -144,61 +192,7 @@ public class GRPCClientService {
 		}
 		return resp;
 	}
-	public String handleFileUpload(@RequestParam("file1") MultipartFile file1, @RequestParam("file2") MultipartFile file2,@RequestParam("operation") String operation,@RequestParam("deadline") String deadline,RedirectAttributes redirectAttributes) throws IOException {
-
-		
-		print("U have uploaded "+ file1.getOriginalFilename());
-		print("U have uploaded " + file2.getOriginalFilename());
-		try{
-			String matrixContent1 = new String(file1.getBytes());
-			String matrixContent2 = new String(file2.getBytes());
-			if(matrixContent1.length()!=0 && matrixContent2.length()!=0){
-				print(matrixContent1);
-				print(matrixContent2);
-				String [] rowsM1 = matrixContent1.split("\n");
-				String [] rowsM2 = matrixContent2.split("\n");
-				if (rowsM1.length == rowsM2.length && rowColCheck(rowsM1) && rowColCheck(rowsM2) && isPowerOfTwo(rowsM1.length))
-				{	
-
-					int[][] EmptyMatrix = new int[rowsM1.length][rowsM1.length];
-					m1 = createIntMatrix(EmptyMatrix, rowsM1);
-					m2 = createIntMatrix(EmptyMatrix, rowsM2);
-					print("Both matrices are the same size and are square");
-					redirectAttributes.addFlashAttribute("message", "Both matrices are the same size and are square");
-					print(operation);
-					ArrayList<int[][]> m1Blocks = convertToBlocks(m1);
-					ArrayList<int[][]> m2Blocks = convertToBlocks(m2);
-					m1Blocked = m1Blocks;
-					m2Blocked = m2Blocks;
-					if(operation.equals("multiply")){
-						return "redirect:/multiply";
-					}
-					else{
-						return "redirect:/add";
-					}
-				}
-				else{
-					print("Please the matrices are the right size and are square");
-					redirectAttributes.addFlashAttribute("message", "Please make sure the matrices are the right size and are square");
-					return "redirect:/";
-				}
-
-			}
-			else{
-				print("You have uploaded an empty file(s)");
-				redirectAttributes.addFlashAttribute("message", "You have uploaded an empty file!");
-				return "redirect:/";
-			}
-			
-		}
-		catch (Exception e){
-			print("Error "+ e);
-			return "";
-		}
-		
-
-		
-	}
+	
 	
 	public ArrayList<int[][]> convertToBlocks(int[][] matrixConvert) {
 		ArrayList<int[][]> converted = new ArrayList<int[][]>();
@@ -225,7 +219,7 @@ public class GRPCClientService {
 		//returns 2D int array of blocks
 		return converted;
 	}
-	
+	//creates a int[][] matrix from string of matrix rows
 	private int[][] createIntMatrix(int[][] matrix, String[] matrixRows) {
 		int counter1 = 0;
 		int counter2 = 0;
