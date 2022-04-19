@@ -165,7 +165,7 @@ public class GRPCClientService {
 						multiply();
 					}
 					else{
-						add();
+						print(add());
 					}
 					return "redirect:/";
 				}
