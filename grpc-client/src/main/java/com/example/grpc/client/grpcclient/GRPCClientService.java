@@ -75,7 +75,6 @@ public class GRPCClientService {
 				.usePlaintext()
 				.build();
 		MatrixServiceGrpc.MatrixServiceBlockingStub stub = MatrixServiceGrpc.newBlockingStub(channel);
-
 		MatrixReply A = stub.multiplyBlock(MatrixRequest.newBuilder()
 				.setA00(m1[0][0])
 				.setA01(m1[0][1])
@@ -97,9 +96,10 @@ public class GRPCClientService {
 				.build();		
 		ArrayList<MatrixReply>rep = new ArrayList<>();
 		MatrixServiceGrpc.MatrixServiceBlockingStub stub = MatrixServiceGrpc.newBlockingStub(channel);
-		for(int i =0; i<m1Blocked.size();i++){
-			int[][] takeBlock1 = m1Blocked.get(i);
-			int[][] takeBlock2 = m2Blocked.get(i);
+		for(int counter =0; counter<m1Blocked.size();counter++)
+		{
+			int[][] takeBlock1 = m1Blocked.get(counter);
+			int[][] takeBlock2 = m2Blocked.get(counter);
 			MatrixReply A = stub.addBlock(MatrixRequest.newBuilder()
 				.setA00(takeBlock1[0][0])
 				.setA01(takeBlock1[0][1])
